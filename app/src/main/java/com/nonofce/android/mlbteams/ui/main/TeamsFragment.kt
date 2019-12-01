@@ -1,7 +1,6 @@
 package com.nonofce.android.mlbteams.ui.main
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -57,7 +56,7 @@ class TeamsFragment : Fragment() {
 
     private fun updateUi(model: TeamsViewModel.UiModel) {
         when (model) {
-            is TeamsViewModel.UiModel.SeasonSelection -> {
+            is TeamsViewModel.UiModel.SeasonLoaded -> {
                 seasonsSelector.adapter =
                     ArrayAdapter(
                         context!!,

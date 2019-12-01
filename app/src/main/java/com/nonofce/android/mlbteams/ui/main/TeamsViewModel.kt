@@ -19,10 +19,8 @@ class TeamsViewModel(private val mlbRepository: MBLRepository) : ViewModel(),
             return _model
         }
 
-    private var currentSelectedSeason = Calendar.getInstance().get(Calendar.YEAR).toString()
-
     sealed class UiModel {
-        class SeasonSelection(val seasons: List<String>) : UiModel()
+        class SeasonLoaded(val seasons: List<String>) : UiModel()
         class TeamsLoaded(val teams: List<Row>) : UiModel()
         class Error(val e: Exception) : UiModel()
         class TeamSelected(val team: Row) : UiModel()
@@ -37,21 +35,20 @@ class TeamsViewModel(private val mlbRepository: MBLRepository) : ViewModel(),
 
     private fun getAvailableSeasons() {
         _model.value =
-            UiModel.SeasonSelection(List(5) { (Calendar.getInstance().get(Calendar.YEAR) - it).toString() })
+            UiModel.SeasonLoaded(List(5) { (Calendar.getInstance().get(Calendar.YEAR) - it).toString() })
     }
 
     fun setSelectedSeason(selectedSeason: String) {
-        currentSelectedSeason = selectedSeason
-        loadTeams()
+        loadTeams(selectedSeason)
     }
 
-    private fun loadTeams() {
+    private fun loadTeams(selectedSeason: String) {
         launch {
             try {
                 _model.value = UiModel.StartLoading
                 _model.value = UiModel.TeamsLoaded(emptyList())
                 _model.value =
-                    UiModel.TeamsLoaded(mlbRepository.loadTeamsBySeason(currentSelectedSeason).team_all_season.queryResults.row.shuffled())
+                    UiModel.TeamsLoaded(mlbRepository.loadTeamsBySeason(selectedSeason).team_all_season.queryResults.row.shuffled())
             } catch (e: Exception) {
                 _model.value = UiModel.Error(e)
             } finally {
