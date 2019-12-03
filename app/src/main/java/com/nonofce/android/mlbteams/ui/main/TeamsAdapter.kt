@@ -37,6 +37,10 @@ class TeamsAdapter(private val listener: (Row) -> Unit) :
 
         fun bind(team: Row) {
             itemView.teamName.text = team.name_display_full
+            itemView.teamAddress.text = team.address
+                .replace("&#xa;", ", ")
+                .replace("&#x9;", ", ")
+            itemView.teamWebUrl.text = team.website_url
         }
 
     }
