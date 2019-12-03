@@ -9,15 +9,20 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.nonofce.android.mlbteams.R
 import com.nonofce.android.mlbteams.model.MBLRepository
+import com.nonofce.android.mlbteams.ui.roster.RosterFragment
 import kotlinx.android.synthetic.main.fragment_teams.*
 
 class TeamsFragment : Fragment() {
 
     private lateinit var viewModel: TeamsViewModel
     private lateinit var teamsAdapter: TeamsAdapter
+    private lateinit var navController: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,6 +35,7 @@ class TeamsFragment : Fragment() {
         )[TeamsViewModel::class.java]
 
         viewModel.model.observe(this, Observer(::updateUi))
+        navController = findNavController()
         return inflater.inflate(R.layout.fragment_teams, container, false)
     }
 
@@ -71,8 +77,9 @@ class TeamsFragment : Fragment() {
                 Snackbar.make(teamFragment, model.e.message.toString(), Snackbar.LENGTH_LONG).show()
             }
             is TeamsViewModel.UiModel.TeamSelected -> {
-                Snackbar.make(teamFragment, model.team.name_display_full, Snackbar.LENGTH_LONG)
-                    .show()
+//                Snackbar.make(teamFragment, model.team.name_display_full, Snackbar.LENGTH_LONG)
+//                    .show()
+                navController.navigate(TeamsFragmentDirections.actionTeamsFragmentToRosterFragment())
             }
             is TeamsViewModel.UiModel.StartLoading -> {
                 progressBar.visibility = View.VISIBLE
