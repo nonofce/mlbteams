@@ -50,7 +50,7 @@ class TeamsFragment : Fragment() {
             }
         }
 
-        teamsAdapter = TeamsAdapter(viewModel::teamSelected)
+        teamsAdapter = TeamsAdapter(viewModel::teamSelected, context!!)
         teamsRecyclerView.adapter = teamsAdapter
     }
 
