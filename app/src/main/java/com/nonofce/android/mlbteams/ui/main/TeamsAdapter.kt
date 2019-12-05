@@ -54,14 +54,14 @@ class TeamsAdapter(private val listener: (Row) -> Unit, private val context: Con
                     .replace("&#xa;", ", ")
                     .replace("&#x9;", ", ")
                 teamWebUrl.text = team.website_url
+                teamLogo.load(
+                    Uri.parse("file:///android_asset/${team.team_id}.svg"),
+                    imageLoader
+                ) {
+                    crossfade(true)
+                }
             }
-            itemView.teamLogo.load(
-                Uri.parse("file:///android_asset/${team.team_id}.svg"),
-                imageLoader
-            ) {
-                crossfade(true)
-                transformations(CircleCropTransformation())
-            }
+
         }
 
     }
