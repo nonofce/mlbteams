@@ -68,7 +68,12 @@ class TeamsFragment : Fragment() {
                 teamsAdapter.teams = model.teams
             }
             is TeamsViewModel.UiModel.Error -> {
-                Snackbar.make(teamFragment, model.e.message.toString(), Snackbar.LENGTH_LONG).show()
+                val snackbar =
+                    Snackbar.make(teamFragment, model.e.message.toString(), Snackbar.LENGTH_LONG)
+                snackbar.setAction(R.string.retryLoading) {
+                    viewModel.setSelectedSeason(seasonsSelector.selectedItem as String)
+                }
+                snackbar.show()
             }
             is TeamsViewModel.UiModel.TeamSelected -> {
                 Snackbar.make(teamFragment, model.team.name_display_full, Snackbar.LENGTH_LONG)

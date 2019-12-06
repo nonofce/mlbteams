@@ -8,8 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
 import coil.api.load
 import coil.decode.SvgDecoder
-import coil.transform.CircleCropTransformation
-import coil.transform.RoundedCornersTransformation
 import com.nonofce.android.mlbteams.R
 import com.nonofce.android.mlbteams.common.basicDiffUtil
 import com.nonofce.android.mlbteams.common.inflate
