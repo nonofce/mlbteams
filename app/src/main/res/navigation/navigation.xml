@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/teamsFragment"
-        android:name="com.nonofce.android.mlbteams.ui.main.TeamsFragment"
+        android:name="com.nonofce.android.mlbteams.ui.teams.TeamsFragment"
         android:label="fragment_teams"
         tools:layout="@layout/fragment_teams" />
 </navigation>

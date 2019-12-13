@@ -1,4 +1,4 @@
-package com.nonofce.android.mlbteams.ui.main
+package com.nonofce.android.mlbteams.ui.teams
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.snackbar.Snackbar
 import com.nonofce.android.mlbteams.R
-import com.nonofce.android.mlbteams.model.MBLRepository
+import com.nonofce.android.mlbteams.data.MBLRepository
 import kotlinx.android.synthetic.main.fragment_teams.*
 
 class TeamsFragment : Fragment() {
@@ -26,7 +26,9 @@ class TeamsFragment : Fragment() {
 
         viewModel = ViewModelProviders.of(
             this,
-            TeamsViewModelFactory(MBLRepository())
+            TeamsViewModelFactory(
+                MBLRepository()
+            )
         )[TeamsViewModel::class.java]
 
         viewModel.model.observe(this, Observer(::updateUi))
@@ -50,7 +52,10 @@ class TeamsFragment : Fragment() {
             }
         }
 
-        teamsAdapter = TeamsAdapter(viewModel::teamSelected, context!!)
+        teamsAdapter = TeamsAdapter(
+            viewModel::teamSelected,
+            context!!
+        )
         teamsRecyclerView.adapter = teamsAdapter
     }
 

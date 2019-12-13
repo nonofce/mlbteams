@@ -1,4 +1,4 @@
-package com.nonofce.android.mlbteams.model
+package com.nonofce.android.mlbteams.data
 
 class MBLRepository {
 

@@ -1,4 +1,4 @@
-package com.nonofce.android.mlbteams.ui.main
+package com.nonofce.android.mlbteams.ui.teams
 
 import android.content.Context
 import android.net.Uri
@@ -11,7 +11,7 @@ import coil.decode.SvgDecoder
 import com.nonofce.android.mlbteams.R
 import com.nonofce.android.mlbteams.common.basicDiffUtil
 import com.nonofce.android.mlbteams.common.inflate
-import com.nonofce.android.mlbteams.model.results.teams.Row
+import com.nonofce.android.mlbteams.model.teams.Row
 import kotlinx.android.synthetic.main.team_view.view.*
 
 class TeamsAdapter(private val listener: (Row) -> Unit, private val context: Context) :
@@ -29,7 +29,9 @@ class TeamsAdapter(private val listener: (Row) -> Unit, private val context: Con
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TeamViewHolder {
         val view = parent.inflate(R.layout.team_view, false)
-        return TeamViewHolder(view)
+        return TeamViewHolder(
+            view
+        )
     }
 
     override fun getItemCount(): Int = teams.size

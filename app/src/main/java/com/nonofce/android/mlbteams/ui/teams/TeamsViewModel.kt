@@ -1,12 +1,12 @@
-package com.nonofce.android.mlbteams.ui.main
+package com.nonofce.android.mlbteams.ui.teams
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.nonofce.android.mlbteams.common.Scope
-import com.nonofce.android.mlbteams.model.MBLRepository
-import com.nonofce.android.mlbteams.model.results.teams.Row
+import com.nonofce.android.mlbteams.data.MBLRepository
+import com.nonofce.android.mlbteams.model.teams.Row
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -35,7 +35,8 @@ class TeamsViewModel(private val mlbRepository: MBLRepository) : ViewModel(),
 
     private fun getAvailableSeasons() {
         _model.value =
-            UiModel.SeasonLoaded(List(5) { (Calendar.getInstance().get(Calendar.YEAR) - it).toString() })
+            UiModel.SeasonLoaded(
+                List(5) { (Calendar.getInstance().get(Calendar.YEAR) - it).toString() })
     }
 
     fun setSelectedSeason(selectedSeason: String) {
@@ -45,20 +46,33 @@ class TeamsViewModel(private val mlbRepository: MBLRepository) : ViewModel(),
     private fun loadTeams(selectedSeason: String) {
         launch {
             try {
-                _model.value = UiModel.StartLoading
-                _model.value = UiModel.TeamsLoaded(emptyList())
                 _model.value =
-                    UiModel.TeamsLoaded(mlbRepository.loadTeamsBySeason(selectedSeason).team_all_season.queryResults.row.shuffled())
+                    UiModel.StartLoading
+                _model.value =
+                    UiModel.TeamsLoaded(
+                        emptyList()
+                    )
+                _model.value =
+                    UiModel.TeamsLoaded(
+                        mlbRepository.loadTeamsBySeason(selectedSeason).team_all_season.queryResults.row.shuffled()
+                    )
             } catch (e: Exception) {
-                _model.value = UiModel.Error(e)
+                _model.value =
+                    UiModel.Error(
+                        e
+                    )
             } finally {
-                _model.value = UiModel.EndLoading
+                _model.value =
+                    UiModel.EndLoading
             }
         }
     }
 
     fun teamSelected(team: Row) {
-        _model.value = UiModel.TeamSelected(team)
+        _model.value =
+            UiModel.TeamSelected(
+                team
+            )
     }
 
     override fun onCleared() {

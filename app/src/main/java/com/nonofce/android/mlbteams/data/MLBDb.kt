@@ -1,4 +1,4 @@
-package com.nonofce.android.mlbteams.model
+package com.nonofce.android.mlbteams.data
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
@@ -17,6 +17,7 @@ object MLBDb {
         .client(okHttpClient)
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .addConverterFactory(GsonConverterFactory.create()).build().run {
-            create<MLBService>(MLBService::class.java)
+            create<MLBService>(
+                MLBService::class.java)
         }
 }
