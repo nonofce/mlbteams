@@ -11,6 +11,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import coil.ImageLoader
+import coil.decode.SvgDecoder
 import com.google.android.material.snackbar.Snackbar
 import com.nonofce.android.mlbteams.R
 import com.nonofce.android.mlbteams.data.MBLRepository
@@ -58,7 +60,11 @@ class TeamsFragment : Fragment() {
 
         teamsAdapter = TeamsAdapter(
             viewModel::teamSelected,
-            context!!
+            ImageLoader(context!!) {
+                componentRegistry {
+                    add(SvgDecoder(context!!))
+                }
+            }
         )
         teamsRecyclerView.adapter = teamsAdapter
     }

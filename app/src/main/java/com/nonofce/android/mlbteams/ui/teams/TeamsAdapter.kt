@@ -14,18 +14,12 @@ import com.nonofce.android.mlbteams.common.inflate
 import com.nonofce.android.mlbteams.model.teams.Row
 import kotlinx.android.synthetic.main.team_view.view.*
 
-class TeamsAdapter(private val listener: (Row) -> Unit, private val context: Context) :
+class TeamsAdapter(private val listener: (Row) -> Unit, private val imageLoader: ImageLoader) :
     RecyclerView.Adapter<TeamsAdapter.TeamViewHolder>() {
 
     var teams: List<Row> by basicDiffUtil(
         emptyList(),
         areItemsTheSame = { old, new -> old.team_id == new.team_id })
-
-    val imageLoader = ImageLoader(context) {
-        componentRegistry {
-            add(SvgDecoder(context))
-        }
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TeamViewHolder {
         val view = parent.inflate(R.layout.team_view, false)
