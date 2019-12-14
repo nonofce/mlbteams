@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.nonofce.android.mlbteams.R
 import com.nonofce.android.mlbteams.data.MBLRepository
@@ -18,25 +20,27 @@ class TeamsFragment : Fragment() {
 
     private lateinit var viewModel: TeamsViewModel
     private lateinit var teamsAdapter: TeamsAdapter
+    private lateinit var navController: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        viewModel = ViewModelProviders.of(
-            this,
-            TeamsViewModelFactory(
-                MBLRepository()
-            )
-        )[TeamsViewModel::class.java]
-
-        viewModel.model.observe(this, Observer(::updateUi))
         return inflater.inflate(R.layout.fragment_teams, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        navController = view.findNavController()
+
+        viewModel = ViewModelProviders.of(
+            this,
+            TeamsViewModelFactory(MBLRepository())
+        )[TeamsViewModel::class.java]
+
+        viewModel.model.observe(this, Observer(::updateUi))
+
         seasonsSelector.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -81,8 +85,10 @@ class TeamsFragment : Fragment() {
                 snackbar.show()
             }
             is TeamsViewModel.UiModel.TeamSelected -> {
-                Snackbar.make(teamFragment, model.team.name_display_full, Snackbar.LENGTH_LONG)
-                    .show()
+                val action = TeamsFragmentDirections.actionTeamsFragmentToRosterFragment(
+                    model.team
+                )
+                navController.navigate(action)
             }
             is TeamsViewModel.UiModel.StartLoading -> {
                 progressBar.visibility = View.VISIBLE
@@ -92,4 +98,5 @@ class TeamsFragment : Fragment() {
             }
         }
     }
+
 }

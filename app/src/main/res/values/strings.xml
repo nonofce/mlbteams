@@ -3,4 +3,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="seasonSelectorLbl">Season</string>
     <string name="retryLoading">Retry</string>
+    <string name="teamsLabel">Teams</string>
+    <string name="rosterLabel">Roster</string>
 </resources>
