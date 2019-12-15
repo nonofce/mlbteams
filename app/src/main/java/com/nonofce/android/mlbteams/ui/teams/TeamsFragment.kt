@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -16,32 +16,40 @@ import coil.decode.SvgDecoder
 import com.google.android.material.snackbar.Snackbar
 import com.nonofce.android.mlbteams.R
 import com.nonofce.android.mlbteams.data.MBLRepository
+import com.nonofce.android.mlbteams.databinding.FragmentTeamsBinding
 import kotlinx.android.synthetic.main.fragment_teams.*
 
 class TeamsFragment : Fragment() {
 
     private lateinit var viewModel: TeamsViewModel
     private lateinit var teamsAdapter: TeamsAdapter
-    private lateinit var navController: NavController
+    private lateinit var dataBinding: FragmentTeamsBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_teams, container, false)
+        dataBinding = DataBindingUtil.inflate<FragmentTeamsBinding>(
+            inflater,
+            R.layout.fragment_teams,
+            container,
+            false
+        )
+        return dataBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        navController = view.findNavController()
 
         viewModel = ViewModelProviders.of(
             this,
             TeamsViewModelFactory(MBLRepository())
         )[TeamsViewModel::class.java]
 
-        viewModel.model.observe(this, Observer(::updateUi))
+        dataBinding.apply {
+            teamsViewModel = viewModel
+            lifecycleOwner = this@TeamsFragment
+        }
 
         seasonsSelector.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
@@ -67,42 +75,11 @@ class TeamsFragment : Fragment() {
             }
         )
         teamsRecyclerView.adapter = teamsAdapter
-    }
 
-    private fun updateUi(model: TeamsViewModel.UiModel) {
-        when (model) {
-            is TeamsViewModel.UiModel.SeasonLoaded -> {
-                seasonsSelector.adapter =
-                    ArrayAdapter(
-                        context!!,
-                        R.layout.support_simple_spinner_dropdown_item,
-                        model.seasons
-                    )
-            }
-            is TeamsViewModel.UiModel.TeamsLoaded -> {
-                teamsAdapter.teams = model.teams
-            }
-            is TeamsViewModel.UiModel.Error -> {
-                val snackbar =
-                    Snackbar.make(teamFragment, model.e.message.toString(), Snackbar.LENGTH_LONG)
-                snackbar.setAction(R.string.retryLoading) {
-                    viewModel.setSelectedSeason(seasonsSelector.selectedItem as String)
-                }
-                snackbar.show()
-            }
-            is TeamsViewModel.UiModel.TeamSelected -> {
-                val action = TeamsFragmentDirections.actionTeamsFragmentToRosterFragment(
-                    model.team
-                )
-                navController.navigate(action)
-            }
-            is TeamsViewModel.UiModel.StartLoading -> {
-                progressBar.visibility = View.VISIBLE
-            }
-            is TeamsViewModel.UiModel.EndLoading -> {
-                progressBar.visibility = View.GONE
-            }
-        }
+        viewModel.selectedTeam.observe(this, Observer {
+            val navController = view.findNavController()
+            val action = TeamsFragmentDirections.actionTeamsFragmentToRosterFragment(it)
+            navController.navigate(action)
+        })
     }
-
 }

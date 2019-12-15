@@ -5,4 +5,6 @@
     <string name="retryLoading">Retry</string>
     <string name="teamsLabel">Teams</string>
     <string name="rosterLabel">Roster</string>
+    <string name="retry">RETRY</string>
+    <string name="error">An error occurred when loading Teams. Please check your Internet connection an try again.</string>
 </resources>
