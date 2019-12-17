@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.nonofce.android.mlbteams.common.Scope
+import com.nonofce.android.mlbteams.common.Event
 import com.nonofce.android.mlbteams.common.ScopedViewModel
 import com.nonofce.android.mlbteams.data.MBLRepository
 import com.nonofce.android.mlbteams.model.teams.Row
@@ -14,6 +14,9 @@ import java.util.*
 
 class TeamsViewModel(private val mlbRepository: MBLRepository) : ScopedViewModel() {
 
+    companion object {
+        const val INITIAL_SEASON = -1
+    }
     private val _progressVisibility = MutableLiveData<Int>()
     val progressVisibility: LiveData<Int>
         get() = _progressVisibility
@@ -26,18 +29,18 @@ class TeamsViewModel(private val mlbRepository: MBLRepository) : ScopedViewModel
     val teams: LiveData<List<Row>>
         get() = _teams
 
-    private val _selectedTeam = MutableLiveData<Row>()
-    val selectedTeam: LiveData<Row>
-        get() = _selectedTeam
+    private val _navigateToRoster = MutableLiveData<Event<Pair<Row, String>>>()
+    val navigateToRoster: LiveData<Event<Pair<Row, String>>>
+        get() = _navigateToRoster
 
     private val _retryVisibility = MutableLiveData<Int>()
     val retryVisibility: LiveData<Int>
         get() = _retryVisibility
 
     private lateinit var selectedSeason: String
+    var selectedSeasonPosition = INITIAL_SEASON
 
     init {
-        //initScope()
         getAvailableSeasons()
         _retryVisibility.value = View.GONE
         _progressVisibility.value = View.GONE
@@ -49,9 +52,12 @@ class TeamsViewModel(private val mlbRepository: MBLRepository) : ScopedViewModel
         selectedSeason = seasons[0]
     }
 
-    fun setSelectedSeason(selectedSeason: String) {
-        loadTeams(selectedSeason)
-        this.selectedSeason = selectedSeason
+    fun setSelectedSeason(selectedSeason: String, position: Int) {
+        if (this.selectedSeasonPosition != position) {
+            loadTeams(selectedSeason)
+            this.selectedSeason = selectedSeason
+            this.selectedSeasonPosition = position
+        }
     }
 
     fun retry() {
@@ -75,13 +81,9 @@ class TeamsViewModel(private val mlbRepository: MBLRepository) : ScopedViewModel
     }
 
     fun teamSelected(team: Row) {
-        _selectedTeam.value = team
+        val args = (team to selectedSeason)
+        _navigateToRoster.value = Event(args)
     }
-
-//    override fun onCleared() {
-//        destroyScope()
-//        super.onCleared()
-//    }
 }
 
 @Suppress("UNCHECKED_CAST")

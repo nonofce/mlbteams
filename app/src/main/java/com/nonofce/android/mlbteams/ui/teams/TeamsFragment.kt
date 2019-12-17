@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -13,8 +14,8 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import coil.ImageLoader
 import coil.decode.SvgDecoder
-import com.google.android.material.snackbar.Snackbar
 import com.nonofce.android.mlbteams.R
+import com.nonofce.android.mlbteams.common.EventObserver
 import com.nonofce.android.mlbteams.data.MBLRepository
 import com.nonofce.android.mlbteams.databinding.FragmentTeamsBinding
 import kotlinx.android.synthetic.main.fragment_teams.*
@@ -24,6 +25,7 @@ class TeamsFragment : Fragment() {
     private lateinit var viewModel: TeamsViewModel
     private lateinit var teamsAdapter: TeamsAdapter
     private lateinit var dataBinding: FragmentTeamsBinding
+    private lateinit var navController: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,10 +43,29 @@ class TeamsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        navController = view.findNavController()
+
         viewModel = ViewModelProviders.of(
             this,
             TeamsViewModelFactory(MBLRepository())
         )[TeamsViewModel::class.java]
+
+        viewModel.navigateToRoster.observe(this, EventObserver {
+            val (team, selectedSeason) = it
+            val action = TeamsFragmentDirections.actionTeamsFragmentToRosterFragment(team)
+            navController.navigate(action)
+        })
+
+        viewModel.seasons.observe(this, Observer {
+            seasonsSelector.adapter = ArrayAdapter(
+                context!!,
+                R.layout.support_simple_spinner_dropdown_item,
+                it
+            )
+            if (viewModel.selectedSeasonPosition != TeamsViewModel.INITIAL_SEASON) {
+                seasonsSelector.setSelection(viewModel.selectedSeasonPosition)
+            }
+        })
 
         dataBinding.apply {
             teamsViewModel = viewModel
@@ -62,7 +83,10 @@ class TeamsFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                viewModel.setSelectedSeason(parent!!.getItemAtPosition(position) as String)
+                viewModel.setSelectedSeason(
+                    parent!!.getItemAtPosition(position) as String,
+                    position
+                )
             }
         }
 
@@ -75,11 +99,5 @@ class TeamsFragment : Fragment() {
             }
         )
         teamsRecyclerView.adapter = teamsAdapter
-
-        viewModel.selectedTeam.observe(this, Observer {
-            val navController = view.findNavController()
-            val action = TeamsFragmentDirections.actionTeamsFragmentToRosterFragment(it)
-            navController.navigate(action)
-        })
     }
 }
