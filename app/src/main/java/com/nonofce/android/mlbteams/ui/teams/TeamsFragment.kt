@@ -16,7 +16,7 @@ import coil.ImageLoader
 import coil.decode.SvgDecoder
 import com.nonofce.android.mlbteams.R
 import com.nonofce.android.mlbteams.common.EventObserver
-import com.nonofce.android.mlbteams.data.MBLRepository
+import com.nonofce.android.mlbteams.data.MLBRepository
 import com.nonofce.android.mlbteams.databinding.FragmentTeamsBinding
 import kotlinx.android.synthetic.main.fragment_teams.*
 
@@ -47,12 +47,12 @@ class TeamsFragment : Fragment() {
 
         viewModel = ViewModelProviders.of(
             this,
-            TeamsViewModelFactory(MBLRepository())
+            TeamsViewModelFactory(MLBRepository())
         )[TeamsViewModel::class.java]
 
         viewModel.navigateToRoster.observe(this, EventObserver {
             val (team, selectedSeason) = it
-            val action = TeamsFragmentDirections.actionTeamsFragmentToRosterFragment(team)
+            val action = TeamsFragmentDirections.actionTeamsFragmentToRosterFragment(team, selectedSeason)
             navController.navigate(action)
         })
 

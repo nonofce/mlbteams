@@ -7,4 +7,14 @@
     <string name="rosterLabel">Roster</string>
     <string name="retry">RETRY</string>
     <string name="error">An error occurred when loading Teams. Please check your Internet connection an try again.</string>
+    <string name="rosterError">An error occurred when loading Roster. Please check your Internet connection an try again.</string>
+    <string name="cf">Centre Field</string>
+    <string name="player_position">Player position</string>
+    <string name="bats">BATS</string>
+    <string name="left">LEFT</string>
+    <string name="right">RIGHT</string>
+    <string name="throws_hand">THROWS</string>
+    <string name="rosterYears"><b>Seasons:</b> [%1$s]</string>
+    <string name="rosterHeaderLbl">%1$s - %2$s</string>
+    <string name="team_logo">Team Logo</string>
 </resources>

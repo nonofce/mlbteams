@@ -7,12 +7,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.nonofce.android.mlbteams.common.Event
 import com.nonofce.android.mlbteams.common.ScopedViewModel
-import com.nonofce.android.mlbteams.data.MBLRepository
+import com.nonofce.android.mlbteams.data.MLBRepository
 import com.nonofce.android.mlbteams.model.teams.Row
 import kotlinx.coroutines.launch
 import java.util.*
 
-class TeamsViewModel(private val mlbRepository: MBLRepository) : ScopedViewModel() {
+class TeamsViewModel(private val mlbRepository: MLBRepository) : ScopedViewModel() {
 
     companion object {
         const val INITIAL_SEASON = -1
@@ -87,7 +87,7 @@ class TeamsViewModel(private val mlbRepository: MBLRepository) : ScopedViewModel
 }
 
 @Suppress("UNCHECKED_CAST")
-class TeamsViewModelFactory(private val mlbRepository: MBLRepository) : ViewModelProvider.Factory {
+class TeamsViewModelFactory(private val mlbRepository: MLBRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T =
         TeamsViewModel(mlbRepository) as T
 

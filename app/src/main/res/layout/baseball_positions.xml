@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="player"
+            type="com.nonofce.android.mlbteams.model.roster.Row" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/baseball_diamond"
+        android:layout_width="100dp"
+        android:layout_height="100dp">
+
+
+        <com.caverock.androidsvg.SVGImageView
+            android:id="@+id/SVGImageView2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_baseball_diamond_clean"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp" />
+
+        <ImageView
+            android:id="@+id/cf"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="16dp"
+            android:contentDescription="@string/player_position"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_player_position_24dp"
+            app:playerPosition="@{player.primary_position}"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/lf"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_player_position_24dp"
+            android:contentDescription="@string/player_position"
+            android:visibility="gone"
+            app:playerPosition="@{player.primary_position}" />
+
+        <ImageView
+            android:id="@+id/rf"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="72dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_player_position_24dp"
+            android:contentDescription="@string/player_position"
+            android:visibility="gone"
+            app:playerPosition="@{player.primary_position}" />
+
+        <ImageView
+            android:id="@+id/b1"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="65dp"
+            android:layout_marginTop="56dp"
+            android:contentDescription="@string/player_position"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_player_position_24dp"
+            android:visibility="gone"
+            app:playerPosition="@{player.primary_position}" />
+
+        <ImageView
+            android:id="@+id/b2"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="40dp"
+            android:contentDescription="@string/player_position"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_player_position_24dp"
+            android:visibility="gone"
+            app:playerPosition="@{player.primary_position}" />
+
+        <ImageView
+            android:id="@+id/ss"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="33dp"
+            android:layout_marginTop="40dp"
+            android:contentDescription="@string/player_position"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_player_position_24dp"
+            android:visibility="gone"
+            app:playerPosition="@{player.primary_position}" />
+
+        <ImageView
+            android:id="@+id/b3"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="27dp"
+            android:layout_marginTop="56dp"
+            android:contentDescription="@string/player_position"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_player_position_24dp"
+            android:visibility="gone"
+            app:playerPosition="@{player.primary_position}" />
+
+        <ImageView
+            android:id="@+id/p"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="46dp"
+            android:layout_marginTop="56dp"
+            android:contentDescription="@string/player_position"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_player_position_24dp"
+            android:visibility="gone"
+            app:playerPosition="@{player.primary_position}" />
+
+        <ImageView
+            android:id="@+id/c"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="46dp"
+            android:layout_marginTop="73dp"
+            android:contentDescription="@string/player_position"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_player_position_24dp"
+            android:visibility="gone"
+            app:playerPosition="@{player.primary_position}" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
