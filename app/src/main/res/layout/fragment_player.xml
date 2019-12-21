@@ -126,36 +126,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:layout_width="0dp"
+        <com.nonofce.android.mlbteams.ui.component.ErrorScreen
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="64dp"
-            android:layout_marginEnd="64dp"
-            android:orientation="vertical"
             android:visibility="@{playerViewModel.retryVisibility}"
+            app:errorText="@string/playerError"
+            app:retryAction="@{()->playerViewModel.retry()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
-                android:text="@string/playerError"
-                android:textAlignment="gravity"
-                android:textAppearance="?android:textAppearanceSmall" />
-
-            <Button
-                android:id="@+id/retry"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:onClick="@{()->playerViewModel.retry()}"
-                android:text="@string/retry" />
-        </LinearLayout>
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
