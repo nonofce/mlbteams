@@ -10,5 +10,7 @@ data class Row(
     val primary_position: String,
     val roster_years: String,
     val team_id: String,
-    val throws: String
-):Parcelable
+    val throws: String,
+    val player_id: String
+
+) : Parcelable

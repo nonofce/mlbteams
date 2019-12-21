@@ -8,6 +8,7 @@
     <string name="retry">RETRY</string>
     <string name="error">An error occurred when loading Teams. Please check your Internet connection an try again.</string>
     <string name="rosterError">An error occurred when loading Roster. Please check your Internet connection an try again.</string>
+    <string name="playerError">An error occurred when loading Player Information. Please check your Internet connection an try again.</string>
     <string name="cf">Centre Field</string>
     <string name="player_position">Player position</string>
     <string name="bats">BATS</string>
@@ -17,4 +18,7 @@
     <string name="rosterYears"><b>Seasons:</b> [%1$s]</string>
     <string name="rosterHeaderLbl">%1$s - %2$s</string>
     <string name="team_logo">Team Logo</string>
+    <string name="playerLocationLbl">%1$s, %2$s</string>
+    <string name="playerHeightLbl">%1$s,%2$s\"</string>
+    <string name="playerWeightLbl">%1$s lb</string>
 </resources>

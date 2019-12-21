@@ -8,11 +8,14 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.ImageLoader
 import coil.api.load
 import coil.decode.SvgDecoder
 import com.nonofce.android.mlbteams.R
+import com.nonofce.android.mlbteams.common.EventObserver
 import com.nonofce.android.mlbteams.data.MLBRepository
 import com.nonofce.android.mlbteams.databinding.FragmentRosterBinding
 import kotlinx.android.synthetic.main.fragment_roster.*
@@ -23,6 +26,7 @@ class RosterFragment : Fragment() {
     private lateinit var viewModel: RosterViewModel
     private lateinit var dataBinding: FragmentRosterBinding
     private lateinit var rosterAdapter: RosterAdapter
+    private lateinit var navController: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +44,7 @@ class RosterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        navController = view.findNavController()
         val imageLoader = ImageLoader(context!!) {
             componentRegistry {
                 add(SvgDecoder(context!!))
@@ -53,19 +58,23 @@ class RosterFragment : Fragment() {
         }
         teamInfo.text =
             getString(R.string.rosterHeaderLbl, args.team.name_display_full, args.selectedSeason)
-        //"${args.team.name_display_full} - ${args.selectedSeason}"
 
         viewModel = ViewModelProviders.of(
             this,
             RosterViewModelFactory(MLBRepository(), args.selectedSeason, args.team.team_id)
         )[RosterViewModel::class.java]
 
+        viewModel.navigateToPlayerInfo.observe(this, EventObserver {
+            val action = RosterFragmentDirections.actionRosterFragmentToPlayerFragment(it)
+            navController.navigate(action)
+        })
+
         dataBinding.apply {
             lifecycleOwner = this@RosterFragment
             rosterViewModel = viewModel
         }
 
-        rosterAdapter = RosterAdapter { viewModel::playerSelected }
+        rosterAdapter = RosterAdapter(viewModel::playerSelected)
         rosterRecyclerView.adapter = rosterAdapter
 
     }

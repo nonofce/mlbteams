@@ -10,4 +10,6 @@ class MLBRepository {
         MLBDb.service.getRosterByTeam(
             startSeason, endSeason, teamId
         ).await()
+
+    suspend fun loadPlayerInfo(playerId: String) = MLBDb.service.getPlayerInfo(playerId).await()
 }

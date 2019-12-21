@@ -17,6 +17,7 @@ class TeamsViewModel(private val mlbRepository: MLBRepository) : ScopedViewModel
     companion object {
         const val INITIAL_SEASON = -1
     }
+
     private val _progressVisibility = MutableLiveData<Int>()
     val progressVisibility: LiveData<Int>
         get() = _progressVisibility
