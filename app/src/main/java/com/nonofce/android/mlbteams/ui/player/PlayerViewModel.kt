@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.nonofce.android.mlbteams.common.ScopedViewModel
 import com.nonofce.android.mlbteams.data.MLBRepository
-import com.nonofce.android.mlbteams.model.player.Row
+import com.nonofce.android.mlbteams.model.server.player.Row
 import kotlinx.coroutines.launch
 
 class PlayerViewModel(private val mlbRepository: MLBRepository, private val playerId: String) :

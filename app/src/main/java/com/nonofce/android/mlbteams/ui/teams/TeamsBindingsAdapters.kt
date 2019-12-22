@@ -4,9 +4,7 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.nonofce.android.mlbteams.R
-import com.nonofce.android.mlbteams.model.teams.Row
 
 @BindingAdapter("teamAddress")
 fun TextView.setTeamAddress(address: String) {

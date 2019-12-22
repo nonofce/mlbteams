@@ -1,4 +1,4 @@
-package com.nonofce.android.mlbteams.model.teams
+package com.nonofce.android.mlbteams.model.server.teams
 
 data class TeamAllSeason(
     val copyRight: String,

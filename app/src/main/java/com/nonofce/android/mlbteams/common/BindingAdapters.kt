@@ -2,7 +2,7 @@ package com.nonofce.android.mlbteams.common
 
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.nonofce.android.mlbteams.model.teams.Row
+import com.nonofce.android.mlbteams.model.server.teams.Row
 import com.nonofce.android.mlbteams.ui.roster.RosterAdapter
 import com.nonofce.android.mlbteams.ui.teams.TeamsAdapter
 
@@ -16,7 +16,7 @@ fun RecyclerView.setTeam(team: List<Row>?) {
 }
 
 @BindingAdapter("roster")
-fun RecyclerView.setRoster(roster: List<com.nonofce.android.mlbteams.model.roster.Row>?) {
+fun RecyclerView.setRoster(roster: List<com.nonofce.android.mlbteams.model.server.roster.Row>?) {
     when (adapter) {
         is RosterAdapter -> (adapter as RosterAdapter).let {
             it.roster = roster ?: emptyList()

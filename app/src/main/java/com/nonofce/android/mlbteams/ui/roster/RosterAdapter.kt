@@ -7,8 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nonofce.android.mlbteams.R
 import com.nonofce.android.mlbteams.common.basicDiffUtil
 import com.nonofce.android.mlbteams.databinding.RosterViewBinding
-import com.nonofce.android.mlbteams.model.roster.Row
-import kotlinx.android.synthetic.main.roster_view.view.*
+import com.nonofce.android.mlbteams.model.server.roster.Row
 
 class RosterAdapter(private val listener: (Row) -> Unit) :
     RecyclerView.Adapter<RosterAdapter.RosterViewHolder>() {

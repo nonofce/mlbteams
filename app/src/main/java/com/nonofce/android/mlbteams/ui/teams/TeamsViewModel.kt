@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.nonofce.android.mlbteams.common.Event
 import com.nonofce.android.mlbteams.common.ScopedViewModel
 import com.nonofce.android.mlbteams.data.MLBRepository
-import com.nonofce.android.mlbteams.model.teams.Row
+import com.nonofce.android.mlbteams.model.server.teams.Row
 import kotlinx.coroutines.launch
 import java.util.*
 

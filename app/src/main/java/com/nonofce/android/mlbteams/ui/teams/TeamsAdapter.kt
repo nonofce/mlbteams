@@ -10,7 +10,7 @@ import coil.api.load
 import com.nonofce.android.mlbteams.R
 import com.nonofce.android.mlbteams.common.basicDiffUtil
 import com.nonofce.android.mlbteams.databinding.TeamViewBinding
-import com.nonofce.android.mlbteams.model.teams.Row
+import com.nonofce.android.mlbteams.model.server.teams.Row
 import kotlinx.android.synthetic.main.team_view.view.*
 
 class TeamsAdapter(private val listener: (Row) -> Unit, private val imageLoader: ImageLoader) :

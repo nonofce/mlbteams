@@ -3,7 +3,7 @@ package com.nonofce.android.mlbteams.ui.player
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.nonofce.android.mlbteams.R
-import com.nonofce.android.mlbteams.model.player.Row
+import com.nonofce.android.mlbteams.model.server.player.Row
 
 @BindingAdapter("playerLocation")
 fun TextView.setPlayerLocation(player: Row?) {

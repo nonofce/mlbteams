@@ -1,6 +1,4 @@
-package com.nonofce.android.mlbteams.model.teams
-
-import com.nonofce.android.mlbteams.model.teams.Row
+package com.nonofce.android.mlbteams.model.server.teams
 
 data class QueryResults(
     val created: String,

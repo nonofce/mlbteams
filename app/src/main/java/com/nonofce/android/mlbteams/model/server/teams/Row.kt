@@ -1,4 +1,4 @@
-package com.nonofce.android.mlbteams.model.teams
+package com.nonofce.android.mlbteams.model.server.teams
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

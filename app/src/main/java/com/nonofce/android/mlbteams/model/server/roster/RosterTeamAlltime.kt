@@ -1,4 +1,4 @@
-package com.nonofce.android.mlbteams.model.roster
+package com.nonofce.android.mlbteams.model.server.roster
 
 data class RosterTeamAlltime(
     val copyRight: String,

@@ -1,8 +1,8 @@
 package com.nonofce.android.mlbteams.data
 
-import com.nonofce.android.mlbteams.model.player.PlayerResults
-import com.nonofce.android.mlbteams.model.roster.RosterResults
-import com.nonofce.android.mlbteams.model.teams.TeamsResults
+import com.nonofce.android.mlbteams.model.server.player.PlayerResults
+import com.nonofce.android.mlbteams.model.server.roster.RosterResults
+import com.nonofce.android.mlbteams.model.server.teams.TeamsResults
 import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 import retrofit2.http.Query
