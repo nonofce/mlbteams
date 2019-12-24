@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
+import com.nonofce.android.mlbteams.MLBApp
 import com.nonofce.android.mlbteams.R
 import com.nonofce.android.mlbteams.data.MLBRepository
 import com.nonofce.android.mlbteams.databinding.FragmentPlayerBinding
@@ -37,7 +38,10 @@ class PlayerFragment : Fragment() {
 
         viewModel = ViewModelProviders.of(
             this,
-            PlayerViewModelFactory(MLBRepository(), args.playerId)
+            PlayerViewModelFactory(
+                MLBRepository(activity!!.applicationContext as MLBApp),
+                args.playerId
+            )
         )[PlayerViewModel::class.java]
 
         dataBinding.apply {

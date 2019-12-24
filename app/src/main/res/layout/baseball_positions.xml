@@ -6,7 +6,7 @@
     <data>
         <variable
             name="player"
-            type="com.nonofce.android.mlbteams.model.roster.Row" />
+            type="com.nonofce.android.mlbteams.model.server.roster.Row" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

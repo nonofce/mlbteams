@@ -45,8 +45,8 @@ class RosterViewModel(
             try {
                 _retryVisibility.value = View.GONE
                 _progressVisibility.value = View.VISIBLE
-                _roster.value = mlbRepository.loadRosterByTeam(season, season, teamId)
-                    .roster_team_alltime.queryResults.row.shuffled()
+                _roster.value = mlbRepository.loadRosterByTeam(season, teamId)
+                    .shuffled()
             } catch (exception: Exception) {
                 _retryVisibility.value = View.VISIBLE
             } finally {

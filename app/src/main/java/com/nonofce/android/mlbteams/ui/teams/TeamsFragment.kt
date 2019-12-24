@@ -14,6 +14,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import coil.ImageLoader
 import coil.decode.SvgDecoder
+import com.nonofce.android.mlbteams.MLBApp
 import com.nonofce.android.mlbteams.R
 import com.nonofce.android.mlbteams.common.EventObserver
 import com.nonofce.android.mlbteams.data.MLBRepository
@@ -47,12 +48,13 @@ class TeamsFragment : Fragment() {
 
         viewModel = ViewModelProviders.of(
             this,
-            TeamsViewModelFactory(MLBRepository())
+            TeamsViewModelFactory(MLBRepository(context!!.applicationContext as MLBApp))
         )[TeamsViewModel::class.java]
 
         viewModel.navigateToRoster.observe(this, EventObserver {
             val (team, selectedSeason) = it
-            val action = TeamsFragmentDirections.actionTeamsFragmentToRosterFragment(team, selectedSeason)
+            val action =
+                TeamsFragmentDirections.actionTeamsFragmentToRosterFragment(team, selectedSeason)
             navController.navigate(action)
         })
 

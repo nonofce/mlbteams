@@ -72,7 +72,7 @@ class TeamsViewModel(private val mlbRepository: MLBRepository) : ScopedViewModel
                 _progressVisibility.value = View.VISIBLE
                 _teams.value = emptyList()
                 _teams.value = mlbRepository.loadTeamsBySeason(selectedSeason)
-                    .team_all_season.queryResults.row.shuffled()
+                    .shuffled()
             } catch (e: Exception) {
                 _retryVisibility.value = View.VISIBLE
             } finally {

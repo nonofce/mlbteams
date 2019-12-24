@@ -14,6 +14,7 @@ import androidx.navigation.fragment.navArgs
 import coil.ImageLoader
 import coil.api.load
 import coil.decode.SvgDecoder
+import com.nonofce.android.mlbteams.MLBApp
 import com.nonofce.android.mlbteams.R
 import com.nonofce.android.mlbteams.common.EventObserver
 import com.nonofce.android.mlbteams.data.MLBRepository
@@ -61,7 +62,11 @@ class RosterFragment : Fragment() {
 
         viewModel = ViewModelProviders.of(
             this,
-            RosterViewModelFactory(MLBRepository(), args.selectedSeason, args.team.team_id)
+            RosterViewModelFactory(
+                MLBRepository(activity!!.applicationContext as MLBApp),
+                args.selectedSeason,
+                args.team.team_id
+            )
         )[RosterViewModel::class.java]
 
         viewModel.navigateToPlayerInfo.observe(this, EventObserver {

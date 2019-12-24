@@ -36,8 +36,7 @@ class PlayerViewModel(private val mlbRepository: MLBRepository, private val play
             try {
                 _retryVisibility.value = View.GONE
                 _progressVisibility.value = View.VISIBLE
-                _playerInfo.value =
-                    mlbRepository.loadPlayerInfo(playerId).player_info.queryResults.row
+                _playerInfo.value = mlbRepository.loadPlayerInfo(playerId)
             } catch (e: Exception) {
                 _retryVisibility.value = View.VISIBLE
             } finally {
@@ -47,7 +46,7 @@ class PlayerViewModel(private val mlbRepository: MLBRepository, private val play
 
     }
 
-    fun retry(){
+    fun retry() {
         loadPlayerInfo()
     }
 

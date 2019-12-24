@@ -50,7 +50,8 @@ interface MLBService {
                 "&player_info.col_in=weight" +
                 "&player_info.col_in=jersey_number" +
                 "&player_info.col_in=birth_city" +
-                "&player_info.col_in=twitter_id"
+                "&player_info.col_in=twitter_id" +
+                "&player_info.col_in=player_id"
     )
     fun getPlayerInfo(@Query("player_id") playerId: String): Deferred<PlayerResults>
 }

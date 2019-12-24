@@ -1,11 +1,13 @@
-package com.nonofce.android.mlbteams.model.server.player
+package com.nonofce.android.mlbteams.model.database
 
-import android.os.Parcelable
-import com.nonofce.android.mlbteams.model.database.PlayerDetail
-import kotlinx.android.parcel.Parcelize
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.nonofce.android.mlbteams.model.server.player.Row
 
-@Parcelize
-data class Row(
+@Entity
+data class PlayerDetail(
+    @PrimaryKey(autoGenerate = false)
+    val player_id: String,
     val age: String,
     val birth_city: String,
     val birth_country: String,
@@ -17,12 +19,10 @@ data class Row(
     val primary_position_txt: String,
     val pro_debut_date: String,
     val twitter_id: String,
-    val weight: String,
-    val player_id: String
-) : Parcelable
+    val weight: String
+)
 
-fun Row.convertToDb() = PlayerDetail(
-    player_id,
+fun PlayerDetail.convertToUi() = Row(
     age,
     birth_city,
     birth_country,
@@ -31,8 +31,9 @@ fun Row.convertToDb() = PlayerDetail(
     height_inches,
     jersey_number,
     name_display_first_last,
-    primary_position_txt,
+    pro_debut_date,
     pro_debut_date,
     twitter_id,
-    weight
+    weight,
+    player_id
 )
