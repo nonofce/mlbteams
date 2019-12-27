@@ -10,6 +10,7 @@ import com.nonofce.android.mlbteams.ui.teams.TeamsAdapter
 fun RecyclerView.setTeam(team: List<Row>?) {
     when (adapter) {
         is TeamsAdapter -> (adapter as TeamsAdapter).let {
+            it.teams = emptyList()
             it.teams = team ?: emptyList()
         }
     }

@@ -42,15 +42,18 @@ class TeamsViewModel(private val mlbRepository: MLBRepository) : ScopedViewModel
     var selectedSeasonPosition = INITIAL_SEASON
 
     init {
-        getAvailableSeasons()
         _retryVisibility.value = View.GONE
         _progressVisibility.value = View.GONE
     }
 
-    private fun getAvailableSeasons() {
-        val seasons = List(5) { (Calendar.getInstance().get(Calendar.YEAR) - it).toString() }
-        _seasons.value = seasons
-        selectedSeason = seasons[0]
+    fun getAvailableSeasons(seasonsCount: Int) {
+        if ((_seasons.value == null) || seasons.value?.size != seasonsCount) {
+            val seasons =
+                List(seasonsCount) { (Calendar.getInstance().get(Calendar.YEAR) - it).toString() }
+            _seasons.value = seasons
+            this.selectedSeason = seasons[0]
+            this.selectedSeasonPosition = INITIAL_SEASON
+        }
     }
 
     fun setSelectedSeason(selectedSeason: String, position: Int) {
@@ -68,9 +71,9 @@ class TeamsViewModel(private val mlbRepository: MLBRepository) : ScopedViewModel
     private fun loadTeams(selectedSeason: String) {
         launch {
             try {
+                _teams.value = emptyList()
                 _retryVisibility.value = View.GONE
                 _progressVisibility.value = View.VISIBLE
-                _teams.value = emptyList()
                 _teams.value = mlbRepository.loadTeamsBySeason(selectedSeason)
                     .shuffled()
             } catch (e: Exception) {
@@ -88,7 +91,9 @@ class TeamsViewModel(private val mlbRepository: MLBRepository) : ScopedViewModel
 }
 
 @Suppress("UNCHECKED_CAST")
-class TeamsViewModelFactory(private val mlbRepository: MLBRepository) : ViewModelProvider.Factory {
+class TeamsViewModelFactory(
+    private val mlbRepository: MLBRepository
+) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T =
         TeamsViewModel(mlbRepository) as T
 

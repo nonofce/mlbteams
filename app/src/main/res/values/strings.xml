@@ -21,4 +21,10 @@
     <string name="playerLocationLbl">%1$s, %2$s</string>
     <string name="playerHeightLbl">%1$s,%2$s\"</string>
     <string name="playerWeightLbl">%1$s lb</string>
+    <string name="settings_seasonCount_title">Number of available seasons</string>
+    <string name="settings_seasonCount_hint">The number of available seasons, starting from current year</string>
+    <string name="settings_lastCacheDate_title">Last cache date</string>
+    <string name="settings_lastCacheDate_hint">Last date when the retrieved data was cached</string>
+    <string name="settingLabel">SettingsFragment</string>
+    <string name="settings_dataDuration_tittle">Data duration</string>
 </resources>

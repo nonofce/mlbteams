@@ -37,4 +37,8 @@
             android:name="playerId"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.nonofce.android.mlbteams.ui.settings.SettingsFragment"
+        android:label="@string/settingLabel" />
 </navigation>
