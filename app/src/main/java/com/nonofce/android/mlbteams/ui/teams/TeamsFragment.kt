@@ -18,6 +18,7 @@ import com.nonofce.android.mlbteams.MLBApp
 import com.nonofce.android.mlbteams.R
 import com.nonofce.android.mlbteams.common.EventObserver
 import com.nonofce.android.mlbteams.data.MLBRepository
+import com.nonofce.android.mlbteams.data.MLBServer
 import com.nonofce.android.mlbteams.databinding.FragmentTeamsBinding
 import com.nonofce.android.mlbteams.ui.settings.MLBSettings
 import kotlinx.android.synthetic.main.fragment_teams.*
@@ -52,7 +53,7 @@ class TeamsFragment : Fragment() {
             this,
             TeamsViewModelFactory(
                 MLBRepository(
-                    context!!.applicationContext as MLBApp,
+                    (context!!.applicationContext as MLBApp).database, MLBServer.service,
                     mlbSettings
                 )
             )

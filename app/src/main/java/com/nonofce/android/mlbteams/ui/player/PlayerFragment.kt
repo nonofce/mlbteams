@@ -12,6 +12,7 @@ import androidx.navigation.fragment.navArgs
 import com.nonofce.android.mlbteams.MLBApp
 import com.nonofce.android.mlbteams.R
 import com.nonofce.android.mlbteams.data.MLBRepository
+import com.nonofce.android.mlbteams.data.MLBServer
 import com.nonofce.android.mlbteams.databinding.FragmentPlayerBinding
 import com.nonofce.android.mlbteams.ui.settings.MLBSettings
 
@@ -41,7 +42,7 @@ class PlayerFragment : Fragment() {
             this,
             PlayerViewModelFactory(
                 MLBRepository(
-                    activity!!.applicationContext as MLBApp,
+                    (activity!!.applicationContext as MLBApp).database, MLBServer.service,
                     MLBSettings(context)
                 ),
                 args.playerId
