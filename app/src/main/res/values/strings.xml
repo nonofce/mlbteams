@@ -25,9 +25,11 @@
     <string name="settings_seasonCount_hint">The number of available seasons, starting from current year</string>
     <string name="settings_lastCacheDate_title">Last cache date</string>
     <string name="settings_lastCacheDate_hint">Last date when the retrieved data was cached</string>
-    <string name="settingLabel">SettingsFragment</string>
+    <string name="settingLabel">Settings</string>
     <string name="settings_dataDuration_tittle">Data duration</string>
     <string name="about_mlb_teams_players"><![CDATA[MLB Teams & Players]]></string>
     <string name="about_info">Shows information about teams and players in MLB seasons. All of the data is property of MLB/MLB Advanced Media.</string>
     <string name="about_powered_by"><a href="https://appac.github.io/mlb-data-api-docs">Powered by MLB Data API</a></string>
+    <string name="aboutLabel">About</string>
+    <string name="mlb_logo">MLB Logo</string>
 </resources>

@@ -44,6 +44,6 @@
     <fragment
         android:id="@+id/aboutFragment"
         android:name="com.nonofce.android.mlbteams.ui.AboutFragment"
-        android:label="fragment_about"
+        android:label="@string/aboutLabel"
         tools:layout="@layout/fragment_about" />
 </navigation>
