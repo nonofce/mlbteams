@@ -12,7 +12,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.preference.PreferenceManager
 import coil.ImageLoader
 import coil.decode.SvgDecoder
 import com.nonofce.android.mlbteams.MLBApp
@@ -20,6 +19,7 @@ import com.nonofce.android.mlbteams.R
 import com.nonofce.android.mlbteams.common.EventObserver
 import com.nonofce.android.mlbteams.data.MLBRepository
 import com.nonofce.android.mlbteams.databinding.FragmentTeamsBinding
+import com.nonofce.android.mlbteams.ui.settings.MLBSettings
 import kotlinx.android.synthetic.main.fragment_teams.*
 
 class TeamsFragment : Fragment() {
@@ -46,19 +46,19 @@ class TeamsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         navController = view.findNavController()
-
-        val seasonsCount =
-            PreferenceManager.getDefaultSharedPreferences(context).getString(
-                "seasonsCount",
-                "5"
-            )?.toInt() ?: 5
-
+        val mlbSettings = MLBSettings(context)
 
         viewModel = ViewModelProviders.of(
             this,
-            TeamsViewModelFactory(MLBRepository(context!!.applicationContext as MLBApp))
+            TeamsViewModelFactory(
+                MLBRepository(
+                    context!!.applicationContext as MLBApp,
+                    mlbSettings
+                )
+            )
         )[TeamsViewModel::class.java]
 
+        val seasonsCount = mlbSettings.getSeasonCountPreferenceValue()
         viewModel.getAvailableSeasons(seasonsCount)
         viewModel.navigateToRoster.observe(this, EventObserver {
             val (team, selectedSeason) = it

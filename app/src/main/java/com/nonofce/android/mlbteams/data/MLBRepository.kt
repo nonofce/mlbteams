@@ -7,19 +7,25 @@ import com.nonofce.android.mlbteams.model.server.player.convertToDb
 import com.nonofce.android.mlbteams.model.server.roster.convertToDb
 import com.nonofce.android.mlbteams.model.server.teams.Row
 import com.nonofce.android.mlbteams.model.server.teams.convertToDb
+import com.nonofce.android.mlbteams.ui.settings.MLBSettings
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.util.*
 
-class MLBRepository(private val application: MLBApp) {
+class MLBRepository(
+    private val application: MLBApp,
+    private val mlbsettings: MLBSettings
+) {
 
     companion object {
-        val TAG = "MLBApp::MLBRepository"
+        private const val TAG = "MLBApp::MLBRepository"
+        private const val MILLISECONDS_IN_A_MINUTE = 60 * 1000
     }
 
     suspend fun loadTeamsBySeason(season: String): List<Row> = withContext(Dispatchers.IO) {
 
         val teamsBySeason = application.database.teamDao().getTeamsCountBySeason(season)
-        if (shouldBeCached(teamsBySeason)) {
+        if (dataShouldBeCached(teamsBySeason)) {
             Log.d(TAG, "Caching Teams in DB")
             val results = MLBServer.service.getTeamsBySeason(season)
                 .await().team_all_season.queryResults.row.map {
@@ -28,13 +34,21 @@ class MLBRepository(private val application: MLBApp) {
             val deletedTeams = application.database.teamDao().deleteBySeason(season)
             Log.d(TAG, "Deleted $deletedTeams teams from season $season")
             application.database.teamDao().insertTeams(results)
+            mlbsettings.updateLastCacheDate()
         }
+
         application.database.teamDao().getTeamsBySeason(season).map {
             it.convertToUi()
         }
+
     }
 
-    private fun shouldBeCached(itemCount: Int): Boolean = itemCount <= 0
+    private fun dataShouldBeCached(itemCount: Int): Boolean {
+        val dataDuration = mlbsettings.getDataDurationPreferenceValue()
+        val lastCacheTime = mlbsettings.getLastCacheDatePreferenceValue()
+        Log.d(TAG, (Date().time - lastCacheTime).toString())
+        return itemCount <= 0 || dataDuration == 0 || (Date().time - lastCacheTime > dataDuration * MILLISECONDS_IN_A_MINUTE)
+    }
 
 
     suspend fun loadRosterByTeam(season: String, teamId: String) =
@@ -42,7 +56,7 @@ class MLBRepository(private val application: MLBApp) {
 
             val rosterByTeamAndSeason =
                 application.database.rosterDao().getRosterCount(season, teamId)
-            if (shouldBeCached(rosterByTeamAndSeason)) {
+            if (dataShouldBeCached(rosterByTeamAndSeason)) {
                 Log.d(TAG, "Caching Roster in DB")
                 val results = MLBServer.service.getRosterByTeam(
                     season, season, teamId
@@ -54,6 +68,7 @@ class MLBRepository(private val application: MLBApp) {
                     application.database.rosterDao().deleteRosterByTeam(season, teamId)
                 Log.d(TAG, "Deleted $deletedPlayers players from team $teamId from season $season")
                 application.database.rosterDao().insertRoster(results)
+                mlbsettings.updateLastCacheDate()
             }
             application.database.rosterDao().getRosterByTeam(season, teamId).map {
                 it.convertToUi()
@@ -72,6 +87,7 @@ class MLBRepository(private val application: MLBApp) {
                 application.database.playerDetailDao().deletePlayerDetail(playerId)
             Log.d(TAG, "Deleted $deletedPlayerDetail players")
             application.database.playerDetailDao().insertPlayerDetail(result)
+            mlbsettings.updateLastCacheDate()
         }
         application.database.playerDetailDao().getPlayerDetailById(playerId).convertToUi()
     }

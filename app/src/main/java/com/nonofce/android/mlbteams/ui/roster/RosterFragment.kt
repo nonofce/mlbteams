@@ -19,6 +19,7 @@ import com.nonofce.android.mlbteams.R
 import com.nonofce.android.mlbteams.common.EventObserver
 import com.nonofce.android.mlbteams.data.MLBRepository
 import com.nonofce.android.mlbteams.databinding.FragmentRosterBinding
+import com.nonofce.android.mlbteams.ui.settings.MLBSettings
 import kotlinx.android.synthetic.main.fragment_roster.*
 
 class RosterFragment : Fragment() {
@@ -63,7 +64,10 @@ class RosterFragment : Fragment() {
         viewModel = ViewModelProviders.of(
             this,
             RosterViewModelFactory(
-                MLBRepository(activity!!.applicationContext as MLBApp),
+                MLBRepository(
+                    activity!!.applicationContext as MLBApp,
+                    MLBSettings(context)
+                ),
                 args.selectedSeason,
                 args.team.team_id
             )

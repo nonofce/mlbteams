@@ -13,6 +13,7 @@ import com.nonofce.android.mlbteams.MLBApp
 import com.nonofce.android.mlbteams.R
 import com.nonofce.android.mlbteams.data.MLBRepository
 import com.nonofce.android.mlbteams.databinding.FragmentPlayerBinding
+import com.nonofce.android.mlbteams.ui.settings.MLBSettings
 
 class PlayerFragment : Fragment() {
 
@@ -39,7 +40,10 @@ class PlayerFragment : Fragment() {
         viewModel = ViewModelProviders.of(
             this,
             PlayerViewModelFactory(
-                MLBRepository(activity!!.applicationContext as MLBApp),
+                MLBRepository(
+                    activity!!.applicationContext as MLBApp,
+                    MLBSettings(context)
+                ),
                 args.playerId
             )
         )[PlayerViewModel::class.java]

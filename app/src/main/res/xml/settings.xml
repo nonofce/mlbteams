@@ -20,5 +20,5 @@
     <Preference
         android:key="lastCacheDate"
         android:title="@string/settings_lastCacheDate_title"
-        android:hint="@string/settings_lastCacheDate_hint" />
+        android:hint="@string/settings_lastCacheDate_hint"/>
 </PreferenceScreen>
