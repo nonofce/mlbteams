@@ -10,6 +10,8 @@ import android.view.ViewGroup
 
 import com.nonofce.android.mlbteams.R
 import kotlinx.android.synthetic.main.fragment_about.*
+import kotlinx.android.synthetic.main.fragment_about.developed_by
+import kotlinx.android.synthetic.main.fragment_player.*
 
 class AboutFragment : Fragment() {
 
@@ -24,6 +26,7 @@ class AboutFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         poweredByUrl.movementMethod = LinkMovementMethod.getInstance()
+        developed_by.movementMethod = LinkMovementMethod.getInstance()
     }
 
 }
