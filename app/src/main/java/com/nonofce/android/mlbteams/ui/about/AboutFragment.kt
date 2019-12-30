@@ -1,4 +1,4 @@
-package com.nonofce.android.mlbteams.ui
+package com.nonofce.android.mlbteams.ui.about
 
 
 import android.os.Bundle
