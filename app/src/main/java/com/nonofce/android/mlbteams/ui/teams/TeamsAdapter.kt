@@ -7,16 +7,17 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
 import coil.api.load
+import com.nonofce.android.domain.Team
 import com.nonofce.android.mlbteams.R
 import com.nonofce.android.mlbteams.common.basicDiffUtil
 import com.nonofce.android.mlbteams.databinding.TeamViewBinding
-import com.nonofce.android.mlbteams.model.server.teams.Row
+import com.nonofce.android.mlbteams.data.server.model.teams.Row
 import kotlinx.android.synthetic.main.team_view.view.*
 
-class TeamsAdapter(private val listener: (Row) -> Unit, private val imageLoader: ImageLoader) :
+class TeamsAdapter(private val listener: (Team) -> Unit, private val imageLoader: ImageLoader) :
     RecyclerView.Adapter<TeamsAdapter.TeamViewHolder>() {
 
-    var teams: List<Row> by basicDiffUtil(
+    var teams: List<Team> by basicDiffUtil(
         emptyList(),
         areItemsTheSame = { old, new -> old.team_id == new.team_id })
 

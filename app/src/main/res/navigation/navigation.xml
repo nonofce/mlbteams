@@ -25,7 +25,7 @@
         tools:layout="@layout/fragment_roster">
         <argument
             android:name="team"
-            app:argType="com.nonofce.android.mlbteams.model.server.teams.Row" />
+            app:argType="com.nonofce.android.mlbteams.data.server.model.teams.Row" />
         <argument
             android:name="selectedSeason"
             app:argType="string" />

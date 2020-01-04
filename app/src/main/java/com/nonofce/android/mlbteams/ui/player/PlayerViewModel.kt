@@ -6,11 +6,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.nonofce.android.mlbteams.common.ScopedViewModel
-import com.nonofce.android.mlbteams.data.MLBRepository
-import com.nonofce.android.mlbteams.model.server.player.Row
+import com.nonofce.android.mlbteams.data.toRemote
+import com.nonofce.android.usecases.LoadPlayer
 import kotlinx.coroutines.launch
+import com.nonofce.android.mlbteams.data.server.model.player.Row as RemotePlayer
 
-class PlayerViewModel(private val mlbRepository: MLBRepository, private val playerId: String) :
+class PlayerViewModel(private val loadPlayer: LoadPlayer) :
     ScopedViewModel() {
 
     private val _progressVisibility = MutableLiveData<Int>()
@@ -21,8 +22,8 @@ class PlayerViewModel(private val mlbRepository: MLBRepository, private val play
     val retryVisibility: LiveData<Int>
         get() = _retryVisibility
 
-    private val _playerInfo = MutableLiveData<Row>()
-    val playerInfo: LiveData<Row>
+    private val _playerInfo = MutableLiveData<RemotePlayer>()
+    val playerInfo: LiveData<RemotePlayer>
         get() = _playerInfo
 
     init {
@@ -36,14 +37,13 @@ class PlayerViewModel(private val mlbRepository: MLBRepository, private val play
             try {
                 _retryVisibility.value = View.GONE
                 _progressVisibility.value = View.VISIBLE
-                _playerInfo.value = mlbRepository.loadPlayerInfo(playerId)
+                _playerInfo.value = loadPlayer.invoke().toRemote()
             } catch (e: Exception) {
                 _retryVisibility.value = View.VISIBLE
             } finally {
                 _progressVisibility.value = View.GONE
             }
         }
-
     }
 
     fun retry() {
@@ -54,10 +54,9 @@ class PlayerViewModel(private val mlbRepository: MLBRepository, private val play
 
 @Suppress("UNCHECKED_CAST")
 class PlayerViewModelFactory(
-    private val mlbRepository: MLBRepository,
-    private val playerId: String
+    private val loadPlayer: LoadPlayer
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-        PlayerViewModel(mlbRepository, playerId) as T
+        PlayerViewModel(loadPlayer) as T
 
 }

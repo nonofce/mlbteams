@@ -4,15 +4,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.nonofce.android.domain.PlayerRoster
 import com.nonofce.android.mlbteams.R
 import com.nonofce.android.mlbteams.common.basicDiffUtil
 import com.nonofce.android.mlbteams.databinding.RosterViewBinding
-import com.nonofce.android.mlbteams.model.server.roster.Row
+import com.nonofce.android.mlbteams.data.server.model.roster.Row
 
-class RosterAdapter(private val listener: (Row) -> Unit) :
+class RosterAdapter(private val listener: (PlayerRoster) -> Unit) :
     RecyclerView.Adapter<RosterAdapter.RosterViewHolder>() {
 
-    var roster: List<Row> by basicDiffUtil(
+    var roster: List<PlayerRoster> by basicDiffUtil(
         emptyList(),
         areItemsTheSame = { old, new -> old.team_id == new.team_id })
 

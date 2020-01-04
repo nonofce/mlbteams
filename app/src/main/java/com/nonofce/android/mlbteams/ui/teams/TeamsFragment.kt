@@ -14,13 +14,17 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import coil.ImageLoader
 import coil.decode.SvgDecoder
+import com.nonofce.android.data.repository.MlbRepository
 import com.nonofce.android.mlbteams.MLBApp
 import com.nonofce.android.mlbteams.R
 import com.nonofce.android.mlbteams.common.EventObserver
-import com.nonofce.android.mlbteams.data.MLBRepository
-import com.nonofce.android.mlbteams.data.MLBServer
+import com.nonofce.android.mlbteams.data.database.RoomDataSource
+import com.nonofce.android.mlbteams.data.server.MLBServer
+import com.nonofce.android.mlbteams.data.server.RetrofitDataSource
 import com.nonofce.android.mlbteams.databinding.FragmentTeamsBinding
 import com.nonofce.android.mlbteams.ui.settings.MLBSettings
+import com.nonofce.android.mlbteams.ui.settings.MlbSettingsDataSource
+import com.nonofce.android.usecases.LoadTeams
 import kotlinx.android.synthetic.main.fragment_teams.*
 
 class TeamsFragment : Fragment() {
@@ -49,14 +53,15 @@ class TeamsFragment : Fragment() {
         navController = view.findNavController()
         val mlbSettings = MLBSettings(context)
 
+        val repository = MlbRepository(
+            RoomDataSource((context!!.applicationContext as MLBApp).database),
+            RetrofitDataSource(MLBServer.service),
+            MlbSettingsDataSource(mlbSettings)
+        )
+
         viewModel = ViewModelProviders.of(
             this,
-            TeamsViewModelFactory(
-                MLBRepository(
-                    (context!!.applicationContext as MLBApp).database, MLBServer.service,
-                    mlbSettings
-                )
-            )
+            TeamsViewModelFactory(LoadTeams(repository))
         )[TeamsViewModel::class.java]
 
         val seasonsCount = mlbSettings.getSeasonCountPreferenceValue()

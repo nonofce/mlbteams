@@ -2,7 +2,7 @@ package com.nonofce.android.mlbteams
 
 import android.app.Application
 import androidx.room.Room
-import com.nonofce.android.mlbteams.data.MLBDatabase
+import com.nonofce.android.mlbteams.data.database.MLBDatabase
 
 class MLBApp : Application() {
 

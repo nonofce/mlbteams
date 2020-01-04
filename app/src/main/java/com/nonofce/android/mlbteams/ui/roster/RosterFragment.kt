@@ -14,13 +14,17 @@ import androidx.navigation.fragment.navArgs
 import coil.ImageLoader
 import coil.api.load
 import coil.decode.SvgDecoder
+import com.nonofce.android.data.repository.MlbRepository
 import com.nonofce.android.mlbteams.MLBApp
 import com.nonofce.android.mlbteams.R
 import com.nonofce.android.mlbteams.common.EventObserver
-import com.nonofce.android.mlbteams.data.MLBRepository
-import com.nonofce.android.mlbteams.data.MLBServer
+import com.nonofce.android.mlbteams.data.database.RoomDataSource
+import com.nonofce.android.mlbteams.data.server.MLBServer
+import com.nonofce.android.mlbteams.data.server.RetrofitDataSource
 import com.nonofce.android.mlbteams.databinding.FragmentRosterBinding
 import com.nonofce.android.mlbteams.ui.settings.MLBSettings
+import com.nonofce.android.mlbteams.ui.settings.MlbSettingsDataSource
+import com.nonofce.android.usecases.LoadRoster
 import kotlinx.android.synthetic.main.fragment_roster.*
 
 class RosterFragment : Fragment() {
@@ -62,16 +66,15 @@ class RosterFragment : Fragment() {
         teamInfo.text =
             getString(R.string.rosterHeaderLbl, args.team.name_display_full, args.selectedSeason)
 
+        val repository = MlbRepository(
+            RoomDataSource((context!!.applicationContext as MLBApp).database),
+            RetrofitDataSource(MLBServer.service),
+            MlbSettingsDataSource(MLBSettings(context))
+        )
+
         viewModel = ViewModelProviders.of(
             this,
-            RosterViewModelFactory(
-                MLBRepository(
-                    (activity!!.applicationContext as MLBApp).database, MLBServer.service,
-                    MLBSettings(context)
-                ),
-                args.selectedSeason,
-                args.team.team_id
-            )
+            RosterViewModelFactory(LoadRoster(repository, args.selectedSeason, args.team.team_id))
         )[RosterViewModel::class.java]
 
         viewModel.navigateToPlayerInfo.observe(this, EventObserver {

@@ -5,7 +5,7 @@
     <data>
         <variable
             name="team"
-            type="com.nonofce.android.mlbteams.model.server.teams.Row" />
+            type="com.nonofce.android.domain.Team" />
 
     </data>
 
@@ -28,7 +28,8 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="#eeeeee"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="@string/team_logo"/>
 
             <TextView
                 android:id="@+id/teamName"

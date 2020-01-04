@@ -5,20 +5,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.nonofce.android.domain.PlayerRoster
 import com.nonofce.android.mlbteams.common.Event
 import com.nonofce.android.mlbteams.common.ScopedViewModel
-import com.nonofce.android.mlbteams.data.MLBRepository
-import com.nonofce.android.mlbteams.model.server.roster.Row
+import com.nonofce.android.usecases.LoadRoster
 import kotlinx.coroutines.launch
 
 class RosterViewModel(
-    private val mlbRepository: MLBRepository,
-    private val season: String,
-    private val teamId: String
+    private val loadRoster: LoadRoster
 ) : ScopedViewModel() {
 
-    private val _roster = MutableLiveData<List<Row>>()
-    val roster: LiveData<List<Row>>
+    private val _roster = MutableLiveData<List<PlayerRoster>>()
+    val roster: LiveData<List<PlayerRoster>>
         get() = _roster
 
     private val _progressVisibility = MutableLiveData<Int>()
@@ -45,8 +43,7 @@ class RosterViewModel(
             try {
                 _retryVisibility.value = View.GONE
                 _progressVisibility.value = View.VISIBLE
-                _roster.value = mlbRepository.loadRosterByTeam(season, teamId)
-                    .shuffled()
+                _roster.value = loadRoster.invoke()
             } catch (exception: Exception) {
                 _retryVisibility.value = View.VISIBLE
             } finally {
@@ -55,7 +52,7 @@ class RosterViewModel(
         }
     }
 
-    fun playerSelected(player: Row) {
+    fun playerSelected(player: PlayerRoster) {
         _navigateToPlayerInfo.value = Event(player.player_id)
     }
 
@@ -66,11 +63,9 @@ class RosterViewModel(
 
 @Suppress("UNCHECKED_CAST")
 class RosterViewModelFactory(
-    private val mlbRepository: MLBRepository,
-    private val season: String,
-    private val teamId: String
+    private val loadRoster: LoadRoster
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-        RosterViewModel(mlbRepository, season, teamId) as T
+        RosterViewModel(loadRoster) as T
 
 }

@@ -9,7 +9,7 @@
     <string name="error">An error occurred when loading Teams. Please check your Internet connection an try again.</string>
     <string name="rosterError">An error occurred when loading Roster. Please check your Internet connection an try again.</string>
     <string name="playerError">An error occurred when loading Player Information. Please check your Internet connection an try again.</string>
-    <string name="cf">Centre Field</string>
+    <string name="cf">Center Field</string>
     <string name="player_position">Player position</string>
     <string name="bats">BATS</string>
     <string name="left">LEFT</string>
