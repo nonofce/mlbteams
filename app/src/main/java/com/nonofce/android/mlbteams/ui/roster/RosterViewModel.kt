@@ -5,7 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.nonofce.android.data.source.Result
 import com.nonofce.android.domain.PlayerRoster
+import com.nonofce.android.mlbteams.R
 import com.nonofce.android.mlbteams.common.Event
 import com.nonofce.android.mlbteams.common.ScopedViewModel
 import com.nonofce.android.usecases.LoadRoster
@@ -31,6 +33,10 @@ class RosterViewModel(
     val navigateToPlayerInfo: LiveData<Event<String>>
         get() = _navigateToPlayerInfo
 
+    private val _retryScreenText = MutableLiveData<Int>()
+    val retryScreenText: LiveData<Int>
+        get() = _retryScreenText
+
     init {
         _retryVisibility.value = View.GONE
         _progressVisibility.value = View.GONE
@@ -39,17 +45,20 @@ class RosterViewModel(
 
     private fun loadRosterByTeam() {
         launch {
-
-            try {
-                _retryVisibility.value = View.GONE
-                _progressVisibility.value = View.VISIBLE
-                _roster.value = loadRoster.invoke()
-            } catch (exception: Exception) {
-                _retryVisibility.value = View.VISIBLE
-            } finally {
-                _progressVisibility.value = View.GONE
+            _retryVisibility.value = View.GONE
+            _progressVisibility.value = View.VISIBLE
+            when (val result = loadRoster.invoke()) {
+                is Result.Success -> _roster.value = result.value
+                else -> showError(result)
             }
+            _progressVisibility.value = View.GONE
         }
+    }
+
+    private fun showError(result: Result<List<PlayerRoster>>) {
+        _retryVisibility.value = View.VISIBLE
+        _retryScreenText.value =
+            if (result is Result.NetworkError) R.string.rosterError else R.string.noDataRoster
     }
 
     fun playerSelected(player: PlayerRoster) {

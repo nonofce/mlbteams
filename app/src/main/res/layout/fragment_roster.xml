@@ -38,6 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:paddingStart="8dp"
+                android:paddingEnd="8dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         </LinearLayout>
@@ -72,7 +73,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="@{rosterViewModel.retryVisibility}"
-            app:errorText="@string/rosterError"
+            app:errorString="@{rosterViewModel.retryScreenText}"
             app:retryAction="@{()->rosterViewModel.retry()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

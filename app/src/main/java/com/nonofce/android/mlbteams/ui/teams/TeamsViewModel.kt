@@ -5,7 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.nonofce.android.data.source.Result
 import com.nonofce.android.domain.Team
+import com.nonofce.android.mlbteams.R
 import com.nonofce.android.mlbteams.common.Event
 import com.nonofce.android.mlbteams.common.ScopedViewModel
 import com.nonofce.android.mlbteams.data.server.model.teams.Row
@@ -40,6 +42,10 @@ class TeamsViewModel(private val loadTeams: LoadTeams) : ScopedViewModel() {
     val retryVisibility: LiveData<Int>
         get() = _retryVisibility
 
+    private val _retryScreenText = MutableLiveData<Int>()
+    val retryScreenText: LiveData<Int>
+        get() = _retryScreenText
+
     private lateinit var selectedSeason: String
     var selectedSeasonPosition = INITIAL_SEASON
 
@@ -72,17 +78,21 @@ class TeamsViewModel(private val loadTeams: LoadTeams) : ScopedViewModel() {
 
     private fun loadTeams(selectedSeason: String) {
         launch {
-            try {
-                _teams.value = emptyList()
-                _retryVisibility.value = View.GONE
-                _progressVisibility.value = View.VISIBLE
-                _teams.value = loadTeams.invoke(selectedSeason)
-            } catch (e: Exception) {
-                _retryVisibility.value = View.VISIBLE
-            } finally {
-                _progressVisibility.value = View.GONE
+            _teams.value = emptyList()
+            _retryVisibility.value = View.GONE
+            _progressVisibility.value = View.VISIBLE
+            when (val result = loadTeams.invoke(selectedSeason)) {
+                is Result.Success -> _teams.value = result.value
+                else -> showError(result)
             }
+            _progressVisibility.value = View.GONE
         }
+    }
+
+    private fun showError(result: Result<List<Team>>) {
+        _retryVisibility.value = View.VISIBLE
+        _retryScreenText.value =
+            if (result is Result.NetworkError) R.string.error else R.string.noDataTeam
     }
 
     fun teamSelected(team: Team) {

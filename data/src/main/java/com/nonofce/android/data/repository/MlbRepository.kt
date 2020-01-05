@@ -2,6 +2,7 @@ package com.nonofce.android.data.repository
 
 import com.nonofce.android.data.source.LocalDataSource
 import com.nonofce.android.data.source.RemoteDataSource
+import com.nonofce.android.data.source.Result
 import com.nonofce.android.data.source.SettingsDataSource
 import com.nonofce.android.domain.Player
 import com.nonofce.android.domain.PlayerRoster
@@ -19,27 +20,33 @@ class MlbRepository(
         private const val MILLISECONDS_IN_A_MINUTE = 60 * 1000
     }
 
-    suspend fun loadTeamsBySeason(season: String): List<Team> {
+    suspend fun loadTeamsBySeason(season: String): Result<List<Team>> {
         val existsTeams = localDataSource.existsTeamsForSeason(season)
         if (dataShouldBeCached(existsTeams)) {
-            val teams = remoteDataSource.loadTeamsBySeason(season)
+            val result = remoteDataSource.loadTeamsBySeason(season)
+            if(result is Result.NetworkError || result is Result.Empty) {
+                return result
+            }
             localDataSource.deleteTeamsInSeason(season)
-            localDataSource.saveTeams(season, teams)
+            localDataSource.saveTeams(season, (result as Result.Success).value)
             settingsDataSource.updateLastCacheDate()
         }
-        return localDataSource.loadTeamsBySeason(season)
+        return Result.Success(localDataSource.loadTeamsBySeason(season))
     }
 
-    suspend fun loadRosterByTeam(season: String, teamId: String): List<PlayerRoster> {
+    suspend fun loadRosterByTeam(season: String, teamId: String): Result<List<PlayerRoster>> {
         val existsRosterForTeamInSeason =
             localDataSource.existsRosterForTeamAndSeason(season = season, teamId = teamId)
         if (dataShouldBeCached(existsRosterForTeamInSeason)) {
-            val roster = remoteDataSource.loadRosterByTeamAndSeason(season, teamId)
+            val result = remoteDataSource.loadRosterByTeamAndSeason(season, teamId)
+            if (result is Result.NetworkError || result == Result.Empty) {
+                return result
+            }
             localDataSource.deleteTeamRosterForSeason(teamId, season)
-            localDataSource.saveRoster(season, roster)
+            localDataSource.saveRoster(season, (result as Result.Success).value)
             settingsDataSource.updateLastCacheDate()
         }
-        return localDataSource.loadRosterByTeamAndSeason(teamId, season)
+        return Result.Success(localDataSource.loadRosterByTeamAndSeason(teamId, season))
     }
 
     suspend fun loadPlayerInfo(playerId: String): Player{

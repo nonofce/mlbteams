@@ -6,7 +6,7 @@ import com.nonofce.android.domain.Team
 
 interface RemoteDataSource {
 
-    suspend fun loadTeamsBySeason(season: String): List<Team>
-    suspend fun loadRosterByTeamAndSeason(season: String, teamId: String): List<PlayerRoster>
+    suspend fun loadTeamsBySeason(season: String): Result<List<Team>>
+    suspend fun loadRosterByTeamAndSeason(season: String, teamId: String): Result<List<PlayerRoster>>
     suspend fun loadPlayerInfo(playerId: String): Player
 }

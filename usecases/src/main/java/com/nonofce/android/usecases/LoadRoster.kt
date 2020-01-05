@@ -1,6 +1,7 @@
 package com.nonofce.android.usecases
 
 import com.nonofce.android.data.repository.MlbRepository
+import com.nonofce.android.data.source.Result
 import com.nonofce.android.domain.PlayerRoster
 
 class LoadRoster(
@@ -9,6 +10,9 @@ class LoadRoster(
     private val teamId: String
 ) {
 
-    suspend fun invoke(): List<PlayerRoster> =
-        repository.loadRosterByTeam(season, teamId).shuffled()
+    suspend fun invoke(): Result<List<PlayerRoster>> =
+        when (val result = repository.loadRosterByTeam(season, teamId)) {
+            is Result.Success -> Result.Success(result.value.shuffled())
+            else -> result
+        }
 }

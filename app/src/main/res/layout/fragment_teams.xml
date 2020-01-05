@@ -72,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="@{teamsViewModel.retryVisibility}"
-            app:errorText="@string/error"
+            app:errorString="@{teamsViewModel.retryScreenText}"
             app:retryAction="@{()->teamsViewModel.retry()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

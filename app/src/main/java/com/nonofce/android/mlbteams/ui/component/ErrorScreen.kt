@@ -29,4 +29,9 @@ fun ErrorScreen.retryAction(listener: () -> Unit) {
     }
 }
 
+@BindingAdapter("errorString")
+fun ErrorScreen.errorText(stringId: Int) {
+    error_text.text = if (stringId != 0) context.resources.getString(stringId) else ""
+}
+
 
