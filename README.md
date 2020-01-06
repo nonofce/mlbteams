@@ -12,4 +12,5 @@ information about the team roster, as well as the players.
 * Preferences
 * Coroutines
 * Retrofit
+* Coil
 * Clean architecture
