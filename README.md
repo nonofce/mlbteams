@@ -1,4 +1,13 @@
-# mlbteams
+# MLB Teams & Players
 
-This app will show information about MLB teams for a given season. You will be able to get
-information about the team roster in a season, as well as about the players.
+This app allows you to get information about MLB teams in season. You will be able to get
+information about the team roster, as well as the players.
+
+## Built with
+
+* MVVM
+* Coroutines
+* Data Binding
+* Room
+* Retrofit
+* Clean architecture
