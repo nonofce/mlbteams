@@ -5,9 +5,11 @@ information about the team roster, as well as the players.
 
 ## Built with
 
-* MVVM
-* Coroutines
+* ViewModel
 * Data Binding
+* Navigation
 * Room
+* Preferences
+* Coroutines
 * Retrofit
 * Clean architecture
