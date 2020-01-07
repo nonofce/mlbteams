@@ -12,7 +12,7 @@ class RetrofitDataSource(private val service: MLBService) : RemoteDataSource {
 
     override suspend fun loadTeamsBySeason(season: String): Result<List<Team>> =
         when (val result = serverCall(Dispatchers.IO) {
-            service.getTeamsBySeason(season).await()
+            service.getTeamsBySeason(season)
                 .team_all_season.queryResults.row?.let { teams ->
                 teams.map { team ->
                     team.toDomain()
@@ -31,7 +31,7 @@ class RetrofitDataSource(private val service: MLBService) : RemoteDataSource {
             season,
             season,
             teamId
-        ).await().roster_team_alltime.queryResults.row?.let { roster ->
+        ).roster_team_alltime.queryResults.row?.let { roster ->
             roster.map { playerRoster ->
                 playerRoster.toDomain()
             }
@@ -42,5 +42,5 @@ class RetrofitDataSource(private val service: MLBService) : RemoteDataSource {
     }
 
     override suspend fun loadPlayerInfo(playerId: String): Player =
-        service.getPlayerInfo(playerId).await().player_info.queryResults.row.toDomain()
+        service.getPlayerInfo(playerId).player_info.queryResults.row.toDomain()
 }

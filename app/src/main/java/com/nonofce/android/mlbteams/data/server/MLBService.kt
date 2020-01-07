@@ -18,7 +18,7 @@ interface MLBService {
                 "&team_all_season.col_in=address" +
                 "&team_all_season.col_in=website_url"
     )
-    fun getTeamsBySeason(@Query("season") season: String): Deferred<TeamsResults>
+    suspend fun getTeamsBySeason(@Query("season") season: String): TeamsResults
 
     @GET(
         "named.roster_team_alltime.bam?" +
@@ -30,11 +30,11 @@ interface MLBService {
                 "&roster_team_alltime.col_in=team_id" +
                 "&roster_team_alltime.col_in=player_id"
     )
-    fun getRosterByTeam(
+    suspend fun getRosterByTeam(
         @Query("start_season") startSeason: String, @Query("end_season") endSeason: String, @Query(
             "team_id"
         ) teamId: String
-    ): Deferred<RosterResults>
+    ): RosterResults
 
 
     @GET(
@@ -53,5 +53,5 @@ interface MLBService {
                 "&player_info.col_in=twitter_id" +
                 "&player_info.col_in=player_id"
     )
-    fun getPlayerInfo(@Query("player_id") playerId: String): Deferred<PlayerResults>
+    suspend fun getPlayerInfo(@Query("player_id") playerId: String): PlayerResults
 }
