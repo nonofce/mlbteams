@@ -99,6 +99,10 @@ class TeamsViewModel(private val loadTeams: LoadTeams) : ScopedViewModel() {
         val args = (team.toRemote() to selectedSeason)
         _navigateToRoster.value = Event(args)
     }
+
+    fun showLocalTeam() {
+
+    }
 }
 
 @Suppress("UNCHECKED_CAST")
