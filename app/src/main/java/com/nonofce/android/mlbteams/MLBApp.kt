@@ -3,16 +3,18 @@ package com.nonofce.android.mlbteams
 import android.app.Application
 import androidx.room.Room
 import com.nonofce.android.mlbteams.data.database.MLBDatabase
+import com.nonofce.android.mlbteams.di.DaggerMlbComponent
+import com.nonofce.android.mlbteams.di.MlbComponent
 
 class MLBApp : Application() {
 
-    lateinit var database: MLBDatabase
+    lateinit var mlbComponent: MlbComponent
         private set
 
     override fun onCreate() {
         super.onCreate()
 
-        database = Room.databaseBuilder(this, MLBDatabase::class.java, "mlbdatabase").build()
+        mlbComponent = DaggerMlbComponent.factory().create(this)
 
     }
 }

@@ -3,8 +3,6 @@ package com.nonofce.android.mlbteams.ui.teams
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.nonofce.android.data.source.Result
 import com.nonofce.android.domain.Team
 import com.nonofce.android.mlbteams.R
@@ -99,13 +97,4 @@ class TeamsViewModel(private val loadTeams: LoadTeams) : ScopedViewModel() {
         val args = (team.toRemote() to selectedSeason)
         _navigateToRoster.value = Event(args)
     }
-}
-
-@Suppress("UNCHECKED_CAST")
-class TeamsViewModelFactory(
-    private val loadTeams: LoadTeams
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-        TeamsViewModel(loadTeams) as T
-
 }

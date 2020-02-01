@@ -7,24 +7,27 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
-import com.nonofce.android.data.repository.MlbRepository
-import com.nonofce.android.mlbteams.MLBApp
 import com.nonofce.android.mlbteams.R
-import com.nonofce.android.mlbteams.data.database.RoomDataSource
-import com.nonofce.android.mlbteams.data.server.MLBServer
-import com.nonofce.android.mlbteams.data.server.RetrofitDataSource
+import com.nonofce.android.mlbteams.common.app
 import com.nonofce.android.mlbteams.databinding.FragmentPlayerBinding
-import com.nonofce.android.mlbteams.ui.settings.MLBSettings
-import com.nonofce.android.mlbteams.ui.settings.MlbSettingsDataSource
-import com.nonofce.android.usecases.LoadPlayer
 
 class PlayerFragment : Fragment() {
 
     private lateinit var dataBinding: FragmentPlayerBinding
-    private lateinit var viewModel: PlayerViewModel
     private val args: PlayerFragmentArgs by navArgs<PlayerFragmentArgs>()
+
+    private lateinit var component: PlayerFragmentComponent
+    private val viewModel: PlayerViewModel by lazy {
+        @Suppress("UNCHECKED_CAST")
+        val vmFactory = object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T =
+                component.playerViewModel as T
+        }
+        ViewModelProvider(this, vmFactory).get(PlayerViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,16 +45,7 @@ class PlayerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val repository = MlbRepository(
-            RoomDataSource((context!!.applicationContext as MLBApp).database),
-            RetrofitDataSource(MLBServer.service),
-            MlbSettingsDataSource(MLBSettings(context))
-        )
-
-        viewModel = ViewModelProviders.of(
-            this,
-            PlayerViewModelFactory(LoadPlayer(repository, args.playerId))
-        )[PlayerViewModel::class.java]
+        component = app.mlbComponent.plus(PlayerFragmentModule(args.playerId))
 
         dataBinding.apply {
             lifecycleOwner = this@PlayerFragment

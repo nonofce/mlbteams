@@ -3,8 +3,6 @@ package com.nonofce.android.mlbteams.ui.roster
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.nonofce.android.data.source.Result
 import com.nonofce.android.domain.PlayerRoster
 import com.nonofce.android.mlbteams.R
@@ -70,11 +68,3 @@ class RosterViewModel(
     }
 }
 
-@Suppress("UNCHECKED_CAST")
-class RosterViewModelFactory(
-    private val loadRoster: LoadRoster
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-        RosterViewModel(loadRoster) as T
-
-}

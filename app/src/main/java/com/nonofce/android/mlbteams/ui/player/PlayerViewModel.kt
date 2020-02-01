@@ -3,8 +3,6 @@ package com.nonofce.android.mlbteams.ui.player
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.nonofce.android.mlbteams.common.ScopedViewModel
 import com.nonofce.android.mlbteams.data.toRemote
 import com.nonofce.android.usecases.LoadPlayer
@@ -49,14 +47,5 @@ class PlayerViewModel(private val loadPlayer: LoadPlayer) :
     fun retry() {
         loadPlayerInfo()
     }
-
-}
-
-@Suppress("UNCHECKED_CAST")
-class PlayerViewModelFactory(
-    private val loadPlayer: LoadPlayer
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-        PlayerViewModel(loadPlayer) as T
 
 }

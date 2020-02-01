@@ -9,30 +9,33 @@ import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import coil.ImageLoader
 import coil.decode.SvgDecoder
-import com.nonofce.android.data.repository.MlbRepository
-import com.nonofce.android.mlbteams.MLBApp
 import com.nonofce.android.mlbteams.R
 import com.nonofce.android.mlbteams.common.EventObserver
-import com.nonofce.android.mlbteams.data.database.RoomDataSource
-import com.nonofce.android.mlbteams.data.server.MLBServer
-import com.nonofce.android.mlbteams.data.server.RetrofitDataSource
+import com.nonofce.android.mlbteams.common.app
 import com.nonofce.android.mlbteams.databinding.FragmentTeamsBinding
-import com.nonofce.android.mlbteams.ui.settings.MLBSettings
-import com.nonofce.android.mlbteams.ui.settings.MlbSettingsDataSource
-import com.nonofce.android.usecases.LoadTeams
 import kotlinx.android.synthetic.main.fragment_teams.*
 
 class TeamsFragment : Fragment() {
 
-    private lateinit var viewModel: TeamsViewModel
     private lateinit var teamsAdapter: TeamsAdapter
     private lateinit var dataBinding: FragmentTeamsBinding
     private lateinit var navController: NavController
+
+    private lateinit var component: TeamFragmentComponent
+    private val viewModel: TeamsViewModel by lazy {
+        @Suppress("UNCHECKED_CAST")
+        val vmFactory = object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T =
+                component.teamsViewModel as T
+        }
+        ViewModelProvider(this, vmFactory).get(TeamsViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,19 +53,10 @@ class TeamsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        component = app.mlbComponent.plus(TeamFragmentModule())
+        val mlbSettings = component.settings
+
         navController = view.findNavController()
-        val mlbSettings = MLBSettings(context)
-
-        val repository = MlbRepository(
-            RoomDataSource((context!!.applicationContext as MLBApp).database),
-            RetrofitDataSource(MLBServer.service),
-            MlbSettingsDataSource(mlbSettings)
-        )
-
-        viewModel = ViewModelProviders.of(
-            this,
-            TeamsViewModelFactory(LoadTeams(repository))
-        )[TeamsViewModel::class.java]
 
         val seasonsCount = mlbSettings.getSeasonCountPreferenceValue()
         viewModel.getAvailableSeasons(seasonsCount)
