@@ -40,7 +40,7 @@
     <fragment
         android:id="@+id/playerFragment"
         android:name="com.nonofce.android.mlbteams.ui.player.PlayerFragment"
-        android:label="PlayerFragment" >
+        android:label="@string/playerLabel" >
         <argument
             android:name="playerId"
             app:argType="string" />

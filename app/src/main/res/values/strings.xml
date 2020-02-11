@@ -6,11 +6,11 @@
     <string name="teamsLabel">Teams</string>
     <string name="rosterLabel">Roster</string>
     <string name="retry">RETRY</string>
-    <string name="error">An error occurred when loading Teams. Please check your Internet connection an try again.</string>
+    <string name="error">An error occurred when loading Teams. Please check your Internet connection and try again.</string>
     <string name="noDataTeam">No Teams information available for the season.</string>
-    <string name="rosterError">An error occurred when loading Roster. Please check your Internet connection an try again.</string>
+    <string name="rosterError">An error occurred when loading Roster. Please check your Internet connection and try again.</string>
     <string name="noDataRoster">No Roster information available for the Team and Season.</string>
-    <string name="playerError">An error occurred when loading Player Information. Please check your Internet connection an try again.</string>
+    <string name="playerError">An error occurred when loading Player Information. Please check your Internet connection and try again.</string>
     <string name="cf">Center Field</string>
     <string name="player_position">Player position</string>
     <string name="bats">BATS</string>
@@ -35,4 +35,5 @@
     <string name="aboutLabel">About</string>
     <string name="mlb_logo">MLB Logo</string>
     <string name="developed_by">Developed by <a href="mailto:nonofce@gmail.com">Nono Francisco Carballo Escalona</a> at Architect Coders program.</string>
+    <string name="playerLabel">Player</string>
 </resources>
