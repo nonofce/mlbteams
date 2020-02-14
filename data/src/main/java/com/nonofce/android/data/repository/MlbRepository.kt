@@ -16,7 +16,6 @@ class MlbRepository(
 ) {
 
     companion object {
-        private const val TAG = "MLBApp::MLBRepository"
         private const val MILLISECONDS_IN_A_MINUTE = 60 * 1000
     }
 
