@@ -3,11 +3,13 @@ package com.nonofce.android.data.repository
 import com.nhaarman.mockitokotlin2.never
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
+import com.nonofce.android.commons.mockedPlayer
+import com.nonofce.android.commons.mockedRoster
+import com.nonofce.android.commons.mockedTeam
 import com.nonofce.android.data.source.LocalDataSource
 import com.nonofce.android.data.source.RemoteDataSource
 import com.nonofce.android.data.source.Result
 import com.nonofce.android.data.source.SettingsDataSource
-import com.nonofce.android.domain.Player
 import com.nonofce.android.domain.PlayerRoster
 import com.nonofce.android.domain.Team
 import kotlinx.coroutines.runBlocking
@@ -153,29 +155,11 @@ class MlbRepositoryTest {
             whenever(localDataSource.loadPlayerInfo(playerId)).thenReturn(mockedPlayer)
 
             val player = mlbRepository.loadPlayerInfo(playerId)
-            assertEquals(mockedPlayer,player)
+            assertEquals(mockedPlayer, player)
 
             verify(localDataSource, never()).savePlayer(mockedPlayer)
         }
 
     }
-
-    private val mockedTeam = Team("12", "Team", "TK", "123", "Address", "www.team.com")
-    private val mockedRoster = PlayerRoster("L", "John Dow", "P", "2019", "123", "L", "456")
-    private val mockedPlayer = Player(
-        "23",
-        "City",
-        "Country",
-        "M",
-        "100",
-        "6.2",
-        "1",
-        "John Doe",
-        "P",
-        "2010",
-        "",
-        "230",
-        "456"
-    )
 
 }

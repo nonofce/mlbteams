@@ -1,6 +1,7 @@
 package com.nonofce.android.usecases
 
 import com.nhaarman.mockitokotlin2.whenever
+import com.nonofce.android.commons.mockedTeam
 import com.nonofce.android.data.repository.MlbRepository
 import com.nonofce.android.data.source.Result
 import com.nonofce.android.domain.Team
@@ -39,6 +40,4 @@ class LoadTeamsTest {
             assertEquals(teams, (loadedTeams as Result.Success<List<Team>>).value)
         }
     }
-
-    private val mockedTeam = Team("12", "Team", "TK", "123", "Address", "www.team.com")
 }

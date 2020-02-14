@@ -1,6 +1,7 @@
 package com.nonofce.android.usecases
 
 import com.nhaarman.mockitokotlin2.whenever
+import com.nonofce.android.commons.mockedRoster
 import com.nonofce.android.data.repository.MlbRepository
 import com.nonofce.android.data.source.Result
 import com.nonofce.android.domain.PlayerRoster
@@ -44,6 +45,4 @@ class LoadRosterTest {
             assertEquals(roster, (loadedRoster as Result.Success<List<PlayerRoster>>).value)
         }
     }
-
-    private val mockedRoster = PlayerRoster("L", "John Dow", "P", "2019", "123", "L", "456")
 }

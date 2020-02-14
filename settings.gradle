@@ -1,2 +1,2 @@
-include ':app', ':usecases', ':data', ':domain'
+include ':app', ':usecases', ':data', ':domain', ':commons'
 rootProject.name='MLB Teams'
