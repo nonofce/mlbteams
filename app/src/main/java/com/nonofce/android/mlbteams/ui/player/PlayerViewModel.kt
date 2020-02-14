@@ -6,11 +6,12 @@ import androidx.lifecycle.MutableLiveData
 import com.nonofce.android.mlbteams.common.ScopedViewModel
 import com.nonofce.android.mlbteams.data.toRemote
 import com.nonofce.android.usecases.LoadPlayer
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import com.nonofce.android.mlbteams.data.server.model.player.Row as RemotePlayer
 
-class PlayerViewModel(private val loadPlayer: LoadPlayer) :
-    ScopedViewModel() {
+class PlayerViewModel(private val loadPlayer: LoadPlayer, uiDispatcher: CoroutineDispatcher) :
+    ScopedViewModel(uiDispatcher) {
 
     private val _progressVisibility = MutableLiveData<Int>()
     val progressVisibility: LiveData<Int>

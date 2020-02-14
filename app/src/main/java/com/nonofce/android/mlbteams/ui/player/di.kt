@@ -5,6 +5,7 @@ import com.nonofce.android.usecases.LoadPlayer
 import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent
+import kotlinx.coroutines.CoroutineDispatcher
 
 @Module
 class PlayerFragmentModule(private val playerId: String) {
@@ -14,7 +15,8 @@ class PlayerFragmentModule(private val playerId: String) {
         LoadPlayer(mlbRepository, playerId)
 
     @Provides
-    fun playerViewModelProvider(loadPlayer: LoadPlayer) = PlayerViewModel(loadPlayer)
+    fun playerViewModelProvider(loadPlayer: LoadPlayer, uiDispatcher: CoroutineDispatcher) =
+        PlayerViewModel(loadPlayer, uiDispatcher)
 }
 
 @Subcomponent(modules = [PlayerFragmentModule::class])

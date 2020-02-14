@@ -5,6 +5,7 @@ import com.nonofce.android.usecases.LoadRoster
 import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent
+import kotlinx.coroutines.CoroutineDispatcher
 
 @Module
 class RosterFragmentModule(private val seasonId: String, private val teamId: String) {
@@ -14,7 +15,8 @@ class RosterFragmentModule(private val seasonId: String, private val teamId: Str
         LoadRoster(mlbRepository, seasonId, teamId)
 
     @Provides
-    fun rosterViewModelProvider(loadRoster: LoadRoster) = RosterViewModel(loadRoster)
+    fun rosterViewModelProvider(loadRoster: LoadRoster, uiDispatcher: CoroutineDispatcher) =
+        RosterViewModel(loadRoster, uiDispatcher)
 
 }
 

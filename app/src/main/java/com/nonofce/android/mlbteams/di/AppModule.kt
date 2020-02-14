@@ -14,6 +14,8 @@ import com.nonofce.android.mlbteams.ui.settings.MLBSettings
 import com.nonofce.android.mlbteams.ui.settings.MlbSettingsDataSource
 import dagger.Module
 import dagger.Provides
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import javax.inject.Singleton
 
 @Module
@@ -22,7 +24,7 @@ class AppModule {
     @Provides
     @Singleton
     fun databaseProvider(app: Application): MLBDatabase =
-        Room.databaseBuilder(app, MLBDatabase::class.java, "mlbdatabase").build()
+        Room.databaseBuilder(app.applicationContext, MLBDatabase::class.java, "mlbdatabase").build()
 
     @Provides
     @Singleton
@@ -45,5 +47,9 @@ class AppModule {
     @Singleton
     fun settingsDataSourceProvider(settings: MLBSettings): SettingsDataSource =
         MlbSettingsDataSource(settings)
+
+    @Provides
+    @Singleton
+    fun uiDispatcher():CoroutineDispatcher = Dispatchers.Main
 
 }

@@ -9,11 +9,12 @@ import com.nonofce.android.mlbteams.R
 import com.nonofce.android.mlbteams.common.Event
 import com.nonofce.android.mlbteams.common.ScopedViewModel
 import com.nonofce.android.usecases.LoadRoster
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 
 class RosterViewModel(
-    private val loadRoster: LoadRoster
-) : ScopedViewModel() {
+    private val loadRoster: LoadRoster, uiDispatcher: CoroutineDispatcher
+) : ScopedViewModel(uiDispatcher) {
 
     private val _roster = MutableLiveData<List<PlayerRoster>>()
     val roster: LiveData<List<PlayerRoster>>

@@ -11,10 +11,12 @@ import com.nonofce.android.mlbteams.common.ScopedViewModel
 import com.nonofce.android.mlbteams.data.server.model.teams.Row
 import com.nonofce.android.mlbteams.data.toRemote
 import com.nonofce.android.usecases.LoadTeams
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import java.util.*
 
-class TeamsViewModel(private val loadTeams: LoadTeams) : ScopedViewModel() {
+class TeamsViewModel(private val loadTeams: LoadTeams, uiDispatcher: CoroutineDispatcher) :
+    ScopedViewModel(uiDispatcher) {
 
     companion object {
         const val INITIAL_SEASON = -1
