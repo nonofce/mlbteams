@@ -31,7 +31,7 @@ class PlayerViewModel(private val loadPlayer: LoadPlayer, uiDispatcher: Coroutin
         loadPlayerInfo()
     }
 
-    private fun loadPlayerInfo() {
+    fun loadPlayerInfo() {
         launch {
             try {
                 _retryVisibility.value = View.GONE

@@ -42,7 +42,7 @@ class RosterViewModel(
         loadRosterByTeam()
     }
 
-    private fun loadRosterByTeam() {
+    fun loadRosterByTeam() {
         launch {
             _retryVisibility.value = View.GONE
             _progressVisibility.value = View.VISIBLE
