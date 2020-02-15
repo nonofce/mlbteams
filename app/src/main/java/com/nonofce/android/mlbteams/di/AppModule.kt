@@ -39,17 +39,5 @@ class AppModule {
     fun remoteDataSourceProvider(service: MLBService): RemoteDataSource =
         RetrofitDataSource(service)
 
-    @Provides
-    @Singleton
-    fun settingsServiceProvider(app:Application): MLBSettings = MLBSettings(app.applicationContext)
-
-    @Provides
-    @Singleton
-    fun settingsDataSourceProvider(settings: MLBSettings): SettingsDataSource =
-        MlbSettingsDataSource(settings)
-
-    @Provides
-    @Singleton
-    fun uiDispatcher():CoroutineDispatcher = Dispatchers.Main
 
 }
