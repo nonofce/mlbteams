@@ -1,12 +1,11 @@
 package com.nonofce.android.mlbteams.integration
 
-import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.nhaarman.mockitokotlin2.verify
 import com.nonofce.android.domain.PlayerRoster
-import com.nonofce.android.domain.Team
-import com.nonofce.android.mlbteams.integration.dagger.*
+import com.nonofce.android.mlbteams.integration.dagger.DaggerMlbComponentTest
+import com.nonofce.android.mlbteams.integration.dagger.fakeRoster
 import com.nonofce.android.mlbteams.ui.roster.RosterFragmentComponent
 import com.nonofce.android.mlbteams.ui.roster.RosterFragmentModule
 import com.nonofce.android.mlbteams.ui.roster.RosterViewModel
@@ -25,9 +24,6 @@ class RosterIntegrationTest {
 
     @Mock
     lateinit var roster: Observer<List<PlayerRoster>>
-
-    @Mock
-    lateinit var app: Application
 
     private lateinit var component: RosterFragmentComponent
     private lateinit var viewModel: RosterViewModel

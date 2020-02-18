@@ -1,11 +1,13 @@
 package com.nonofce.android.mlbteams.integration
 
-import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.nhaarman.mockitokotlin2.verify
 import com.nonofce.android.domain.Team
-import com.nonofce.android.mlbteams.integration.dagger.*
+import com.nonofce.android.mlbteams.integration.dagger.DaggerMlbComponentTest
+import com.nonofce.android.mlbteams.integration.dagger.FakeTeamFragmentComponent
+import com.nonofce.android.mlbteams.integration.dagger.FakeTeamFragmentModule
+import com.nonofce.android.mlbteams.integration.dagger.fakeTeams
 import com.nonofce.android.mlbteams.ui.teams.TeamsViewModel
 import org.junit.Before
 import org.junit.Rule
@@ -22,9 +24,6 @@ class TeamsIntegrationTest {
 
     @Mock
     lateinit var teams: Observer<List<Team>>
-
-    @Mock
-    lateinit var app: Application
 
     private lateinit var component: FakeTeamFragmentComponent
     private lateinit var viewModel: TeamsViewModel

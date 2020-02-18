@@ -1,6 +1,5 @@
 package com.nonofce.android.mlbteams.integration
 
-import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.nhaarman.mockitokotlin2.verify
@@ -26,9 +25,6 @@ class PlayerIntegrationTest {
 
     @Mock
     lateinit var player: Observer<RemotePlayer>
-
-    @Mock
-    lateinit var app: Application
 
     private lateinit var component: PlayerFragmentComponent
     private lateinit var viewModel: PlayerViewModel
