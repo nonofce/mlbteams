@@ -79,6 +79,10 @@ allprojects {
         androidXTestLib = [
                 archCoreTest: 'android.arch.core:core-testing:1.1.1'
         ]
+
+        kaptTestLib = [
+                kapTestDagger: 'com.google.dagger:dagger-compiler:2.23.1'
+        ]
     }
 }
 
