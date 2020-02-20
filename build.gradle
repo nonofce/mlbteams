@@ -44,7 +44,7 @@ allprojects {
 
         kaptLibs = [
                 roomCompiler: 'androidx.room:room-compiler:2.2.3',
-                daggerCompiler: 'com.google.dagger:dagger-compiler:2.23.1'
+                daggerCompiler: 'com.google.dagger:dagger-compiler:2.23.1',
         ]
 
         kotlinLibs = [
@@ -58,7 +58,8 @@ allprojects {
         ]
 
         libs = [
-                okhttp3Interceptor: 'com.squareup.okhttp3:logging-interceptor:3.14.1',
+                okhttp: 'com.squareup.okhttp3:okhttp:4.2.1',
+                okhttp3Interceptor: 'com.squareup.okhttp3:logging-interceptor:4.2.1',
                 retrofit2: 'com.squareup.retrofit2:retrofit:2.6.1',
                 retrofit2ConvertedJSON: 'com.squareup.retrofit2:converter-gson:2.6.1',
                 retrofit2KotlinCoroutines: 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
@@ -73,7 +74,11 @@ allprojects {
 
         androidTestLibs = [
                 testRunner: 'androidx.test:runner:1.2.0',
-                espresso: 'androidx.test.espresso:espresso-core:3.2.0'
+                espresso: 'androidx.test.espresso:espresso-core:3.2.0',
+                rules: 'androidx.test:rules:1.2.0',
+                extJUnit: 'androidx.test.ext:junit-ktx:1.1.1',
+                mockWebServer: 'com.squareup.okhttp3:mockwebserver:4.2.1',
+                okhttpIdling: 'com.jakewharton.espresso:okhttp3-idling-resource:1.0.0'
         ]
 
         androidXTestLib = [
@@ -81,7 +86,8 @@ allprojects {
         ]
 
         kaptTestLib = [
-                kapTestDagger: 'com.google.dagger:dagger-compiler:2.23.1'
+                kapTestDagger: 'com.google.dagger:dagger-compiler:2.23.1',
+                daggerProcessor: 'com.google.dagger:dagger-android-processor:2.23.1'
         ]
     }
 }

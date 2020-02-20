@@ -6,14 +6,14 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object MLBServer {
+class MLBServer (baseUrl: String) {
     private val okHttpClient = HttpLoggingInterceptor().run {
         level = HttpLoggingInterceptor.Level.BODY
         OkHttpClient.Builder().addInterceptor(this).build()
     }
 
     val service: MLBService = Retrofit.Builder()
-        .baseUrl("https://lookup-service-prod.mlb.com/json/")
+        .baseUrl(baseUrl)
         .client(okHttpClient)
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .addConverterFactory(GsonConverterFactory.create()).build().run {

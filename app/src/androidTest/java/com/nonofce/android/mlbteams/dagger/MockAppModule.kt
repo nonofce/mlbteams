@@ -1,4 +1,4 @@
-package com.nonofce.android.mlbteams.di
+package com.nonofce.android.mlbteams.dagger
 
 import android.app.Application
 import androidx.room.Room
@@ -9,13 +9,17 @@ import com.nonofce.android.mlbteams.data.database.RoomDataSource
 import com.nonofce.android.mlbteams.data.server.MLBServer
 import com.nonofce.android.mlbteams.data.server.MLBService
 import com.nonofce.android.mlbteams.data.server.RetrofitDataSource
+import com.nonofce.android.mlbteams.di.AppModule
+import com.nonofce.android.mlbteams.utils.MockWebServerRule
 import dagger.Module
 import dagger.Provides
+import okhttp3.mockwebserver.MockWebServer
 import javax.inject.Named
 import javax.inject.Singleton
+import kotlin.concurrent.thread
 
 @Module
-class AppModule {
+class MockAppModule {
 
     @Provides
     @Singleton
@@ -27,8 +31,19 @@ class AppModule {
     fun localDataSourceProvider(database: MLBDatabase): LocalDataSource = RoomDataSource(database)
 
     @Provides
+    @Singleton
+    fun getMockWebServer() = MockWebServer()
+
+    @Provides
     @Named("baseURL")
-    fun getRemoteBaseURL() = "https://lookup-service-prod.mlb.com/json/"
+    fun getRemoteBaseURL(server: MockWebServer) : String{
+        var url = ""
+        val t = thread {
+            url = server.url("/").toString()
+        }
+        t.join()
+        return url
+    }
 
     @Provides
     @Singleton
@@ -40,5 +55,7 @@ class AppModule {
     fun remoteDataSourceProvider(service: MLBService): RemoteDataSource =
         RetrofitDataSource(service)
 
-
+    @Provides
+    @Singleton
+    fun getMockWebServerRule(server: MockWebServer) = MockWebServerRule(server)
 }
