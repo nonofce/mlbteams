@@ -12,7 +12,7 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [AppModule::class, DataModule::class, SettingModule::class, DispatcherModule::class])
+@Component(modules = [UrlModule::class, AppModule::class, DataModule::class, SettingModule::class, DispatcherModule::class])
 interface MlbComponent {
 
     fun plus(module: TeamFragmentModule): TeamFragmentComponent

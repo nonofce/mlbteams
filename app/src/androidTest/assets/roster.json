@@ -1,0 +1,20 @@
+{
+  "roster_team_alltime": {
+    "copyRight": " Copyright 2020 MLB Advanced Media, L.P.  Use of any content on this page acknowledges agreement to the terms posted here http://gdx.mlb.com/components/copyright.txt  ",
+    "queryResults": {
+      "created": "2020-02-25T04:07:52",
+      "totalSize": "45",
+      "row": [
+        {
+          "name_first_last": "Nick Ahmed",
+          "primary_position": "SS",
+          "bats": "R",
+          "throws": "R",
+          "player_id": "605113",
+          "roster_years": "2013-2020",
+          "team_id": "109"
+        }
+      ]
+    }
+  }
+}

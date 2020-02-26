@@ -9,7 +9,6 @@ import com.nonofce.android.mlbteams.di.MlbComponent
 class MLBApp : Application() {
 
     lateinit var mlbComponent: MlbComponent
-        private set
 
     override fun onCreate() {
         super.onCreate()

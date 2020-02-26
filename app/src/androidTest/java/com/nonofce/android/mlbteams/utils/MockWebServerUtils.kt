@@ -11,14 +11,12 @@ fun MockResponse.fromJson(context: Context, jsonFile: String): MockResponse =
 
 private
 fun readJsonFile(context: Context, jsonFilePath: String): String {
-    val res = context.packageManager.getResourcesForApplication("com.nonofce.android.mlbteams")
-
     var br: BufferedReader? = null
 
     try {
         br = BufferedReader(
             InputStreamReader(
-                res.assets.open(
+                context.assets.open(
                     jsonFilePath
                 ), UTF_8
             )

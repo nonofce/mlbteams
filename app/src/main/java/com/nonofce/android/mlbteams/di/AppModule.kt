@@ -27,13 +27,13 @@ class AppModule {
     fun localDataSourceProvider(database: MLBDatabase): LocalDataSource = RoomDataSource(database)
 
     @Provides
-    @Named("baseURL")
-    fun getRemoteBaseURL() = "https://lookup-service-prod.mlb.com/json/"
+    @Singleton
+    fun getRemoteServer(@Named("baseURL") baseUrl: String): MLBServer = MLBServer(baseUrl)
 
     @Provides
     @Singleton
-    fun remoteServiceProvider(@Named("baseURL") baseUrl: String): MLBService =
-        MLBServer(baseUrl).service
+    fun remoteServiceProvider(server: MLBServer): MLBService =
+        server.service
 
     @Provides
     @Singleton

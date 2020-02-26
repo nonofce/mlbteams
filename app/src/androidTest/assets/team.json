@@ -1,0 +1,19 @@
+{
+  "team_all_season": {
+    "copyRight": " Copyright 2020 MLB Advanced Media, L.P.  Use of any content on this page acknowledges agreement to the terms posted here http://gdx.mlb.com/components/copyright.txt  ",
+    "queryResults": {
+      "created": "2020-02-19T21:55:17",
+      "totalSize": "30",
+      "row": [
+        {
+          "name_display_full": "Arizona Diamondbacks",
+          "address": "401 East Jefferson Street&#xa;Phoenix, AZ&#x9;85004",
+          "team_code": "ari",
+          "website_url": "dbacks.com",
+          "address_zip": "85004",
+          "team_id": "109"
+        }
+      ]
+    }
+  }
+}

@@ -57,5 +57,6 @@ dependencies {
     androidTestImplementation androidTestLibs.values()
 
     kaptTest kaptTestLib.values()
+    kaptAndroidTest kaptAndroidTest.values()
 
 }

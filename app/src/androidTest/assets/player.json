@@ -1,0 +1,24 @@
+{
+  "player_info": {
+    "copyRight": " Copyright 2020 MLB Advanced Media, L.P.  Use of any content on this page acknowledges agreement to the terms posted here http://gdx.mlb.com/components/copyright.txt  ",
+    "queryResults": {
+      "created": "2020-02-25T22:03:29",
+      "totalSize": "1",
+      "row": {
+        "primary_position_txt": "LF",
+        "birth_country": "USA",
+        "twitter_id": "xxx",
+        "jersey_number": "16",
+        "weight": "185",
+        "age": "27",
+        "name_display_first_last": "Nick Ahmed",
+        "height_inches": "11",
+        "height_feet": "5",
+        "birth_city": "Neptune Beach",
+        "gender": "M",
+        "pro_debut_date": "2016-05-06T00:00:00",
+        "player_id": "605113"
+      }
+    }
+  }
+}

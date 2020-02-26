@@ -56,7 +56,8 @@ class MlbRepository(
             localDataSource.savePlayer(player)
             settingsDataSource.updateLastCacheDate()
         }
-        return localDataSource.loadPlayerInfo(playerId)
+        val loadPlayerInfo = localDataSource.loadPlayerInfo(playerId)
+        return loadPlayerInfo
     }
 
     private fun dataShouldBeCached(existsItem: Boolean): Boolean {
