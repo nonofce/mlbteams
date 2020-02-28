@@ -110,5 +110,9 @@ class TeamsFragment : Fragment() {
             }
         )
         teamsRecyclerView.adapter = teamsAdapter
+
+        fab.setOnClickListener {
+            viewModel.showLocalTeam()
+        }
     }
 }

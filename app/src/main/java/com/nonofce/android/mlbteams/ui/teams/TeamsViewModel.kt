@@ -99,4 +99,8 @@ class TeamsViewModel(private val loadTeams: LoadTeams, uiDispatcher: CoroutineDi
         val args = (team.toRemote() to selectedSeason)
         _navigateToRoster.value = Event(args)
     }
+
+    fun showLocalTeam() {
+
+    }
 }
