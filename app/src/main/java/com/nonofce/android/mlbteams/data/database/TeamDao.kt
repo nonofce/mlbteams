@@ -20,4 +20,7 @@ interface TeamDao {
 
     @Query("DELETE FROM Team WHERE season = :season")
     fun deleteBySeason(season: String): Int
+
+    @Query("SELECT * FROM Team WHERE season = :season AND address_zip = :zipCode")
+    fun getTeamBySeasonAndZipCode(season: String, zipCode: String): Team?
 }

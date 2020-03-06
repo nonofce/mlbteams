@@ -10,7 +10,7 @@ buildscript {
         
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.0'
+        classpath 'com.android.tools.build:gradle:3.6.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -40,7 +40,9 @@ allprojects {
                 koil: 'io.coil-kt:coil:0.8.0',
                 koilsSVG: 'io.coil-kt:coil-svg:0.8.0',
                 dagger2: "com.google.dagger:dagger:$dagger_version",
-                legacySupport: 'androidx.legacy:legacy-support-v4:1.0.0'
+                legacySupport: 'androidx.legacy:legacy-support-v4:1.0.0',
+                dexter : 'com.karumi:dexter:5.0.0',
+                playServicesLocation: 'com.google.android.gms:play-services-location:17.0.0'
         ]
 
         kaptLibs = [

@@ -21,4 +21,6 @@ interface LocalDataSource {
     suspend fun savePlayer(player: Player)
     suspend fun deletePlayer(playerId: String): Int
 
+    suspend fun getLocalTeam(season: String, zipCode: String): Team
+
 }

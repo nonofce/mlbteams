@@ -4,6 +4,7 @@ import com.nonofce.android.data.source.LocalDataSource
 import com.nonofce.android.domain.Player
 import com.nonofce.android.domain.PlayerRoster
 import com.nonofce.android.domain.Team
+import com.nonofce.android.domain.nullTeam
 import com.nonofce.android.mlbteams.data.toLocal
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -65,4 +66,10 @@ class RoomDataSource(private val mlbDatabase: MLBDatabase) : LocalDataSource {
     override suspend fun deletePlayer(playerId: String): Int = withContext(Dispatchers.IO) {
         mlbDatabase.playerDetailDao().deletePlayerDetail(playerId)
     }
+
+    override suspend fun getLocalTeam(season: String, zipCode: String): Team =
+        withContext(Dispatchers.IO) {
+
+            mlbDatabase.teamDao().getTeamBySeasonAndZipCode(season, zipCode)?.toDomain() ?: nullTeam
+        }
 }

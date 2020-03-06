@@ -72,7 +72,7 @@ class RosterFragment : Fragment() {
         component =
             app.mlbComponent.plus(RosterFragmentModule(args.selectedSeason, args.team.team_id))
 
-        viewModel.navigateToPlayerInfo.observe(this, EventObserver {
+        viewModel.navigateToPlayerInfo.observe(viewLifecycleOwner, EventObserver {
             val action = RosterFragmentDirections.actionRosterFragmentToPlayerFragment(it)
             navController.navigate(action)
         })

@@ -6,6 +6,7 @@ import com.nonofce.android.data.source.Result
 import com.nonofce.android.domain.Player
 import com.nonofce.android.domain.PlayerRoster
 import com.nonofce.android.domain.Team
+import com.nonofce.android.domain.nullTeam
 import com.nonofce.android.mlbteams.data.database.toDomain
 import com.nonofce.android.mlbteams.data.toLocal
 import dagger.Module
@@ -83,6 +84,8 @@ class FakeLocalDataSource : LocalDataSource {
         fakeLocalPlayer = fakeLocalPlayer.filterNot { it.player_id == playerId }
         return fakeLocalPlayer.count()
     }
+
+    override suspend fun getLocalTeam(season: String, zipCode: String): Team = nullTeam
 
 }
 

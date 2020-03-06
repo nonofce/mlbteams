@@ -11,11 +11,16 @@ import com.nonofce.android.mlbteams.common.ScopedViewModel
 import com.nonofce.android.mlbteams.data.server.model.teams.Row
 import com.nonofce.android.mlbteams.data.toRemote
 import com.nonofce.android.usecases.LoadTeams
+import com.nonofce.android.usecases.LocalTeam
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import java.util.*
 
-class TeamsViewModel(private val loadTeams: LoadTeams, uiDispatcher: CoroutineDispatcher) :
+class TeamsViewModel(
+    private val loadTeams: LoadTeams,
+    private val localTeam: LocalTeam,
+    uiDispatcher: CoroutineDispatcher
+) :
     ScopedViewModel(uiDispatcher) {
 
     companion object {
@@ -45,6 +50,10 @@ class TeamsViewModel(private val loadTeams: LoadTeams, uiDispatcher: CoroutineDi
     private val _retryScreenText = MutableLiveData<Int>()
     val retryScreenText: LiveData<Int>
         get() = _retryScreenText
+
+    private val _noLocalTeam = MutableLiveData<Boolean>()
+    val noLocatTeam: LiveData<Boolean>
+        get() = _noLocalTeam
 
     private lateinit var selectedSeason: String
     var selectedSeasonPosition = INITIAL_SEASON
@@ -101,6 +110,14 @@ class TeamsViewModel(private val loadTeams: LoadTeams, uiDispatcher: CoroutineDi
     }
 
     fun showLocalTeam() {
-
+        launch {
+            val result = localTeam.invoke(selectedSeason)
+            _noLocalTeam.value = false
+            if (result is Result.Success && result.value.team_id != "-1") {
+                teamSelected(result.value)
+            } else {
+                _noLocalTeam.value = true
+            }
+        }
     }
 }

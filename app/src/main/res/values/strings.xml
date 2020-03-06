@@ -36,4 +36,5 @@
     <string name="mlb_logo">MLB Logo</string>
     <string name="developed_by">Developed by <a href="mailto:nonofce@gmail.com">Nono Francisco Carballo Escalona</a> at Architect Coders program.</string>
     <string name="playerLabel">Player</string>
+    <string name="noLocalTeamFound">No team found locally for selected season</string>
 </resources>

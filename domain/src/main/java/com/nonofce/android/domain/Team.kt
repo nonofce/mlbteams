@@ -8,3 +8,12 @@ data class Team(
     val address: String,
     val website_url: String
 )
+
+var nullTeam = Team(
+    "",
+    "",
+    "",
+    "-1",
+    "",
+    ""
+)

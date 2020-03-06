@@ -1,5 +1,6 @@
 package com.nonofce.android.mlbteams.ui.teams
 
+import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,8 +16,10 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import coil.ImageLoader
 import coil.decode.SvgDecoder
+import com.google.android.material.snackbar.Snackbar
 import com.nonofce.android.mlbteams.R
 import com.nonofce.android.mlbteams.common.EventObserver
+import com.nonofce.android.mlbteams.common.PermissionRequester
 import com.nonofce.android.mlbteams.common.app
 import com.nonofce.android.mlbteams.databinding.FragmentTeamsBinding
 import kotlinx.android.synthetic.main.fragment_teams.*
@@ -37,11 +40,16 @@ class TeamsFragment : Fragment() {
         ViewModelProvider(this, vmFactory).get(TeamsViewModel::class.java)
     }
 
+    private lateinit var coarsePermissionRequester: PermissionRequester
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        dataBinding = DataBindingUtil.inflate<FragmentTeamsBinding>(
+        coarsePermissionRequester =
+            PermissionRequester(this.activity!!, ACCESS_FINE_LOCATION)
+
+        dataBinding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_teams,
             container,
@@ -60,14 +68,14 @@ class TeamsFragment : Fragment() {
 
         val seasonsCount = mlbSettings.getSeasonCountPreferenceValue()
         viewModel.getAvailableSeasons(seasonsCount)
-        viewModel.navigateToRoster.observe(this, EventObserver {
+        viewModel.navigateToRoster.observe(viewLifecycleOwner, EventObserver {
             val (team, selectedSeason) = it
             val action =
                 TeamsFragmentDirections.actionTeamsFragmentToRosterFragment(team, selectedSeason)
             navController.navigate(action)
         })
 
-        viewModel.seasons.observe(this, Observer {
+        viewModel.seasons.observe(viewLifecycleOwner, Observer {
             seasonsSelector.adapter = ArrayAdapter(
                 context!!,
                 R.layout.support_simple_spinner_dropdown_item,
@@ -112,7 +120,20 @@ class TeamsFragment : Fragment() {
         teamsRecyclerView.adapter = teamsAdapter
 
         fab.setOnClickListener {
-            viewModel.showLocalTeam()
+            coarsePermissionRequester.request {
+                viewModel.showLocalTeam()
+            }
+
         }
+
+        viewModel.noLocatTeam.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                Snackbar.make(
+                    teamsRecyclerView,
+                    getString(R.string.noLocalTeamFound),
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
+        })
     }
 }

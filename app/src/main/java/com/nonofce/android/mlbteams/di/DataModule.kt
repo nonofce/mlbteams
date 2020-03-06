@@ -1,9 +1,8 @@
 package com.nonofce.android.mlbteams.di
 
+import com.nonofce.android.data.repository.LocationRepository
 import com.nonofce.android.data.repository.MlbRepository
-import com.nonofce.android.data.source.LocalDataSource
-import com.nonofce.android.data.source.RemoteDataSource
-import com.nonofce.android.data.source.SettingsDataSource
+import com.nonofce.android.data.source.*
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -18,4 +17,11 @@ class DataModule {
         remoteDataSource: RemoteDataSource,
         settingsDataSource: SettingsDataSource
     ) = MlbRepository(localDataSource, remoteDataSource, settingsDataSource)
+
+    @Provides
+    @Singleton
+    fun locationRepositoryProvider(
+        permissionChecker: PermissionChecker,
+        locationDataSource: LocationDataSource
+    ) = LocationRepository(permissionChecker, locationDataSource)
 }

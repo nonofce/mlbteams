@@ -23,7 +23,7 @@ class MlbRepository(
         val existsTeams = localDataSource.existsTeamsForSeason(season)
         if (dataShouldBeCached(existsTeams)) {
             val result = remoteDataSource.loadTeamsBySeason(season)
-            if(result is Result.NetworkError || result is Result.Empty) {
+            if (result is Result.NetworkError || result is Result.Empty) {
                 return result
             }
             localDataSource.deleteTeamsInSeason(season)
@@ -48,9 +48,9 @@ class MlbRepository(
         return Result.Success(localDataSource.loadRosterByTeamAndSeason(teamId, season))
     }
 
-    suspend fun loadPlayerInfo(playerId: String): Player{
+    suspend fun loadPlayerInfo(playerId: String): Player {
         val existsPlayer = localDataSource.existsPlayer(playerId)
-        if(dataShouldBeCached(existsPlayer)){
+        if (dataShouldBeCached(existsPlayer)) {
             val player = remoteDataSource.loadPlayerInfo(playerId)
             localDataSource.deletePlayer(playerId)
             localDataSource.savePlayer(player)
@@ -58,6 +58,13 @@ class MlbRepository(
         }
         val loadPlayerInfo = localDataSource.loadPlayerInfo(playerId)
         return loadPlayerInfo
+    }
+
+    suspend fun getLocalTeam(season: String, zipCode: String): Result<Team> {
+        val localTeam = localDataSource.getLocalTeam(season, zipCode)
+        return Result.Success(
+            localTeam
+        )
     }
 
     private fun dataShouldBeCached(existsItem: Boolean): Boolean {
