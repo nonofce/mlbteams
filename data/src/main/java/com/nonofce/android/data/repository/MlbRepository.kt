@@ -60,12 +60,8 @@ class MlbRepository(
         return loadPlayerInfo
     }
 
-    suspend fun getLocalTeam(season: String, zipCode: String): Result<Team> {
-        val localTeam = localDataSource.getLocalTeam(season, zipCode)
-        return Result.Success(
-            localTeam
-        )
-    }
+    suspend fun getLocalTeam(season: String, zipCode: String): Result<Team> =
+        Result.Success(localDataSource.getLocalTeam(season, zipCode))
 
     private fun dataShouldBeCached(existsItem: Boolean): Boolean {
         val dataDuration = settingsDataSource.getDataDuration()

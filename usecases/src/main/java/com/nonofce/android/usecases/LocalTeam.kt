@@ -12,7 +12,6 @@ class LocalTeam(
 
     suspend fun invoke(season: String): Result<Team> {
         val zipCode = locationRepository.getZipCode()
-        val localTeam = mlbRepository.getLocalTeam(season, zipCode)
-        return localTeam
+        return mlbRepository.getLocalTeam(season, zipCode)
     }
 }
