@@ -9,7 +9,7 @@ import okhttp3.mockwebserver.MockWebServer
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [MockUrlModule::class, AppModule::class, DataModule::class, SettingModule::class, DispatcherModule::class])
+@Component(modules = [MockUrlModule::class, AppModule::class, DataModule::class, SettingModule::class, DispatcherModule::class, LocationModule::class])
 interface UiMlbComponentTest : MlbComponent {
 
     fun getMockWebServer(): MockWebServer

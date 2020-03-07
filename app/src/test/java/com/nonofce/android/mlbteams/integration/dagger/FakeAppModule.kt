@@ -1,8 +1,6 @@
 package com.nonofce.android.mlbteams.integration.dagger
 
-import com.nonofce.android.data.source.LocalDataSource
-import com.nonofce.android.data.source.RemoteDataSource
-import com.nonofce.android.data.source.Result
+import com.nonofce.android.data.source.*
 import com.nonofce.android.domain.Player
 import com.nonofce.android.domain.PlayerRoster
 import com.nonofce.android.domain.Team
@@ -28,6 +26,24 @@ class FakeAppModule {
     @Singleton
     fun remoteDataSourceProvider(): RemoteDataSource =
         FakeRemoteDataSource()
+
+    @Provides
+    @Singleton
+    fun getLocationDataSourceProvider(): LocationDataSource =
+        FakeLocationDataSource()
+
+    @Provides
+    @Singleton
+    fun getPermissionChecker(): PermissionChecker =
+        FakePermissionChecker()
+}
+
+class FakePermissionChecker : PermissionChecker {
+    override suspend fun check(permission: PermissionChecker.Permission): Boolean = true
+}
+
+class FakeLocationDataSource : LocationDataSource {
+    override suspend fun getZipCode(): String? = "33019"
 }
 
 class FakeLocalDataSource : LocalDataSource {

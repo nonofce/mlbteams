@@ -11,6 +11,7 @@ import com.nonofce.android.data.source.Result
 import com.nonofce.android.domain.Team
 import com.nonofce.android.mlbteams.ui.teams.TeamsViewModel
 import com.nonofce.android.usecases.LoadTeams
+import com.nonofce.android.usecases.LocalTeam
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -30,6 +31,9 @@ class TeamsViewModelTest {
     lateinit var loadTeams: LoadTeams
 
     @Mock
+    lateinit var localTeam: LocalTeam
+
+    @Mock
     lateinit var progressVisibility: Observer<Int>
 
     @Mock
@@ -41,7 +45,7 @@ class TeamsViewModelTest {
 
     @Before
     fun setup() {
-        viewModel = TeamsViewModel(loadTeams, Dispatchers.Unconfined)
+        viewModel = TeamsViewModel(loadTeams, localTeam, Dispatchers.Unconfined)
     }
 
     @Test

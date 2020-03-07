@@ -1,6 +1,7 @@
 package com.nonofce.android.mlbteams.integration.dagger
 
 import com.nonofce.android.mlbteams.di.DataModule
+import com.nonofce.android.mlbteams.di.LocationModule
 import com.nonofce.android.mlbteams.ui.player.PlayerFragmentComponent
 import com.nonofce.android.mlbteams.ui.player.PlayerFragmentModule
 import com.nonofce.android.mlbteams.ui.roster.RosterFragmentComponent
